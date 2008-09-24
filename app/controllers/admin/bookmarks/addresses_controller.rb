@@ -30,7 +30,7 @@ class Admin::Bookmarks::AddressesController < Admin::BaseController
   def destroy
     @address = Address.find(params[:id])
     @address.destroy
-    render :action => 'index'
+    redirect_to :action => 'index'
   end
   
 end
