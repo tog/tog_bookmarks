@@ -1,0 +1,36 @@
+<table class="tableB">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">URL</th>
+      <th scope="col">Bookmarks count</th>
+      <th scope="col">Created by</th>
+      <th scope="col">Created at</th>
+    </tr>
+  </thead>
+<%if !@addresses.empty?%>  
+  <tfoot>
+    <tr>
+      <td colspan="4" class="info_results">
+        <span class="info_items"><%= page_entries_info @addresses %></span>
+        <span class="pages_navigation right">
+          <%= will_paginate @addresses, :container => false %>
+        </span>
+        </td>
+    </tr>
+  </tfoot>
+<%end%>
+  <tbody>
+    <% @addresses.each do |addr| %>
+
+    <tr<%= cycle(' class="pair"','') -%>>
+  	<td><%= link_to addr.title, admin_bookmarks_address_path(addr.id) %></td>
+    	<td><%= addr.url%></td>
+    	<td><%= addr.bookmarks_count%></td>
+    	<td><%= link_to addr.owner.login, edit_admin_user_url(addr.owner) %></td>
+    	<td class="status"><%=addr.created_at.strftime("%d/%m/%Y")%></td>
+    </tr>  
+
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,51 @@
+<script type="text/javascript">
+function showForm(){
+    Element.toggle("details");
+    Element.toggle("editform");
+}
+</script>
+
+<div id="details">
+	
+	<fieldset>
+	<legend>Address <%=@address.title%></legend>
+
+	<table>
+		<tr><td>Title</td><td><%=@address.title%></td><tr>
+		<tr><td>URL</td><td><%=@address.url%></td><tr>	
+		<tr><td>Description</td><td><%=@address.description%></td><tr>	
+		<tr><td>Links</td><td><%=@address.bookmarks_count%></td><tr>	
+	    <tr><td>Author</td><td><%= link_to @address.owner.login, edit_admin_user_url(@address.owner) %></td><tr>
+	    <tr><td>Created at</td><td><%=@address.created_at%></td><tr>
+	</table>
+
+	</fieldset>
+  <p>
+  <a class="button" href="javascript:showForm()">Edit</a>
+  <%= link_to 'Back', admin_bookmarks_addresses_path, :class => 'button'%>
+  <%= link_to 'Destroy', admin_bookmarks_address_path(@address), :confirm => 'Are you sure you want to destroy this address and all its bookmarks?', :class => 'button delete', :method => :delete %>
+  </p>
+</div>
+
+
+
+<%= error_messages_for :address %>
+<div id="editform"  style="display:none;">
+  <% form_for :address, :url => admin_bookmarks_address_path(@address), :html => {:id => "settings", :method => :put} do |f| -%>
+
+  	<fieldset>
+  	<legend>Address <%=@address.title%></legend>
+  <table>
+      <tr><td>Title</td><td><%=f.text_field :title %></td></tr>
+      <tr><td>URL</td><td><%=f.text_field :url %></td></tr>
+      <tr><td>Description</td><td><%=f.text_area :description, :size => '40x6' %></td></tr>		
+  </table>
+  	</fieldset>
+  <p>
+  <input type="submit" value="Guardar" class="button" />
+  <a class="button" href="javascript:showForm()">Cancelar</a>
+  <%= link_to 'Back', admin_bookmarks_addresses_path, :class => 'button'%>
+
+  </p>
+  <% end -%>  
+</div>

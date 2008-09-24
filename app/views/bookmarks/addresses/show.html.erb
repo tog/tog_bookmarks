@@ -1,0 +1,104 @@
+<div id="pagebody" class="threecols clearfix">
+
+    <div id="sidebar_1">
+        
+			<%= render :partial => "/groups/last_groups" %>
+                                   
+    </div> <!-- #sidebar_1 -->
+    
+    
+    
+    <div id="mainzone">  
+
+    <div class="title1 maincolor4 rss">Enlace</div>
+
+    <br />
+	<div id="feedback<%=@address.id%>" style="display:none;"><div id="msg<%=@address.id%>" class="notice"></div></div>
+	<% if flash[:notice] -%>
+	        <div class="notice"><%= flash[:notice] %></div>
+	<% end -%>
+	<% if flash[:error] -%>
+	        <div class="error"><%= flash[:error] %></div>
+	<% end -%>
+	    
+		<div class="padding1">
+
+			<div class="detail1 right_ico">
+		    
+            <div class="title maincolor3"><strong><%=@address.title%></strong></div>
+				<div class="hits_ico right_ico"><%=@address.bookmarks_count%> <img src="/img/ico/hits.gif" alt="compartido <%=@address.bookmarks_count%> veces" title="compartido <%=@address.bookmarks_count%> veces " /></div>
+            <div class="subtitle maincolor2">
+                <a href="<%=@address.url%>" class="maincolor3" target="_blank"><%=@address.url%></a><br />
+                Compartido por <%=link_to @address.owner.name, profile_path(@address.owner.profile), :class=> 'maincolor5' %> el <%=@address.created_at.strftime("%d/%m/%Y")%></div>
+            <div class="text">
+                <p><%=@address.description%></p>                                           
+            </div> 
+			<%if @bookmark%>
+				<div class="maincolor5">Este enlace está en tu perfil</div>
+			<%else%>
+        <%if logged_in?%>
+          <div class="maincolor5">
+             <%= link_to_remote 'Copiar este enlace a tu perfil', :url => copy_member_bookmarks_bookmark_path(@address), :html=> {:class =>'maincolor5'}%> <%= link_to_remote image_tag("/img/ico/add.gif"), :url => copy_member_bookmarks_bookmark_path(@address), :html=> {:class =>'maincolor5'}%>
+          </div>
+        <%end%>
+			<%end%>
+			<%if logged_in?-%><%=report_abuse_link(@address, 'Reportar abuso', :class => 'maincolor5') %><%end-%>
+        </div>
+        
+		</div> <!-- .padding1 -->
+		
+
+		        <script type="text/javascript">
+		        function showForm(){
+		            Element.toggle("feedback");
+		        }
+		        </script>
+		        <div id="feedback" style="display:none;">
+			
+				  <% form_for :comment, :url => comment_path, :html => {:id => "f_comment"} do |f| -%>
+				    <%= f.hidden_field :commentable_type, {:value => @address.class.name} -%>
+				    <%= f.hidden_field :commentable_id, {:value => @address.id} -%>
+
+				    <div class="doblecol_1 clearfix">
+
+		                  <dt><label for="comment" class="maincolor4">Texto del comentario</label></dt>
+		                  <dd><%= f.text_area :comment, {:rows=>6, :cols=>50, :class=>"editor wide"} -%></dd>
+				    </div>
+
+				    <p align="center">
+				<%= submit_tag 'Enviar', {:accesskey => "s", :class=>"button1"} %>
+				<%= button_to_function 'Cancelar',"showForm();",  :class => 'button1'%>
+				    </p>
+				  <% end %>			
+			
+		        </div>
+
+		         <div class="title1 maincolor4 rss">
+
+					Comentarios (<%=@address.comments.size%>) 
+
+					 <% if logged_in? -%> 
+					 <div class="coment">
+					   <a href="javascript:showForm()"><img src="/img/ico/add.gif" alt="Añadir comentario" /></a>
+					   <a class="maincolor4" href="javascript:showForm()">Añadir comentario</a>
+					 </div>
+					 <%end-%>
+		         </div>
+
+					<div class="padding1">
+						<ul class="list1 right_ico">
+			          <% for comment in @address.comments %>
+              		<%= render :partial => "/comment_item", :locals => {:comment => comment} %>
+						    <% end -%>
+						</ul>
+					</div> <!-- .padding1 -->		
+
+
+    </div> <!-- #mainzone -->
+    <div id="sidebar_2">
+			<%= render :partial => "/bookmarks/addresses/topaddresses" %>
+		    <%= render :partial => "/profiles/lastmembers" %>   
+    </div> <!-- #sidebar_2 -->   
+</div>  <!-- #pagebody -->
+
+  

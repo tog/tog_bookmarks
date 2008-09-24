@@ -1,0 +1,14 @@
+<%= render :partial => "mails/email_header" %>
+
+<p>
+Hola <%=@moderator.name%>! El usuario de Myfamilypedia, <%=link_to @user.name,profiles_show_url(@user.profile)%>, ha sugerido la siguiente web: 
+<%=link_to @link.url.url,@link.url.url%>  (compartida <%=@link.url.links_count%>  veces) para la comunidad <%=@group.name%>
+</p>
+<p>Para decidir aceptarla o no, pulsa aquí:</p>
+<p>
+<a hreF="<%=@url%>">Solicitudes de links a la comunidad</a>
+</p>
+<p>	
+<%=link_to "Aceptar",groups_accept_link_url(@group, @link) %>&nbsp;|&nbsp;<%=link_to "Rechazar",groups_reject_link_url(@group, @link) %>
+</p>
+<%= render :partial => "mails/email_footer" %>

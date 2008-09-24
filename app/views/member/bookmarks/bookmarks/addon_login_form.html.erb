@@ -1,0 +1,26 @@
+<!-- login -->
+
+<% form_tag ilinks_login_path, {:class=>"form1"} do -%>
+	<% if flash[:notice] -%>
+	        <div class="notice"><%= flash[:notice] %></div>
+	<% end -%>
+	<% if flash[:error] -%>
+	        <div class="error"><%= flash[:error] %></div>
+	<% end -%>
+    <p>
+        <label for="username"><strong>Nombre de usuario:</strong><br />
+            <%= text_field_tag 'login', '', :class => 'fieldbox wide' %>
+        </label>
+    </p>
+    
+    <p>
+        <label for="password"><strong>Contraseña:</strong><br />
+		<%= password_field_tag 'password', '', :class => 'fieldbox wide' %>
+        </label>
+    </p>
+    <p class="center"><label for="remember"><%= check_box_tag 'remember_me' %> Recordarme en este ordenador</label></p>
+
+    <p class="center"><input type="submit" class="button" value="Enviar" name="bntsubmit"/></p>                
+<% end -%>
+
+<!-- /login -->

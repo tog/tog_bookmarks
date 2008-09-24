@@ -1,0 +1,83 @@
+<div id="pagebody" class="clearfix towcols_right">
+    
+    
+    
+    <div id="mainzone">
+        <h2 class="maintitle2 blue clearfix">
+            <span>Enlaces</span>
+        </h2>
+        <div class="maintitlebottom">
+            
+		    <%= render :partial => "bookmarks/addresses/buscador" %>
+
+        </div> <!-- .maintitlebottom -->
+        
+        
+        <div class="twocols_inside2">
+            
+            <div class="leftcol_inside">
+
+					<%= render :partial => "bookmarks/addresses/lastaddresses" %>
+
+            </div> <!-- .leftcol_inside -->
+            
+            
+            <div class="rightcol_inside">
+
+		    <div class="title1 maincolor4 rss">Enlaces
+		        <a href="/links.rss" class="rss"><img src="/img/ico/rss.gif" alt="Sindicación rss" /></a>
+		    </div>
+
+			Ordenar por:
+			<%if @search_term%>
+			<%= link_to 'título', addresses_search_path({:asc => @asc,:order => 'title', :search_term => @search_term}), {:class => "maincolor3", :title => "Ordenar por título"} -%> | 
+			<%= link_to 'URL', addresses_search_path({:asc => @asc,:order => 'url', :search_term => @search_term}), {:class => "maincolor3", :title => "Ordenar por URL"} -%> |
+			<%= link_to 'fecha de publicación', addresses_search_path({:asc => @asc,:order => 'publish_date', :search_term => @search_term}), {:class => "maincolor3", :title => "Ordenar por fecha de publicación"} -%> | 
+			<%= link_to 'número de links', addresses_search_path({:asc => @asc,:order => 'links_count', :search_term => @search_term}), {:class => "maincolor3", :title => "Ordenar por número de links"} -%>
+			<%else%>
+			<%= link_to 'título', bookmarks_addresses_path({:asc => @asc,:order => 'title'}), {:class => "maincolor3", :title => "Ordenar por título"} -%> | 
+			<%= link_to 'URL', bookmarks_addresses_path({:asc => @asc,:order => 'url'}), {:class => "maincolor3", :title => "Ordenar por URL"} -%> |
+			<%= link_to 'fecha de publicación', bookmarks_addresses_path({:asc => @asc,:order => 'created_at'}), {:class => "maincolor3", :title => "Ordenar por fecha de publicación"} -%> | 
+			<%= link_to 'número de links', bookmarks_addresses_path({:asc => @asc,:order => 'bookmarks_count'}), {:class => "maincolor3", :title => "Ordenar por número de links"} -%>				
+			<%end%>			 
+
+			<br /><br />
+
+			<% if flash[:notice] -%>
+			        <div class="notice"><%= flash[:notice] %></div>
+			<% end -%>
+			<% if flash[:error] -%>
+			        <div class="error"><%= flash[:error] %></div>
+			<% end -%>
+		    <br />
+				<div class="padding1">
+				<ul class="list1 right_ico">
+				<% for addr in @addresses %>
+					<%= render :partial => "bookmarks/addresses/list_detail", :locals => { :addr => addr } %>
+				<%end-%>
+				</ul>
+				</div> <!-- .padding1 -->
+				<br />
+		        <div class="pages_navigation big">
+		             <%= will_paginate %>
+		        </div>
+
+
+            </div> <!-- .rightcol_inside -->
+            
+        </div> <!-- .twocols_inside -->
+
+
+    </div> <!-- #mainzone -->   
+    
+    
+    <div class="sidebar_2">
+
+		<%= render :partial => "bookmarks/addresses/topaddresses" %>        
+	    <%= render :partial => "/profiles/lastmembers" %>
+	
+    </div> <!-- .sidebar_2 -->    
+        
+</div>  <!-- #pagebody -->
+
+  

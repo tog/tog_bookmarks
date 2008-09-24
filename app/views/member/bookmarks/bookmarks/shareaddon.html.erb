@@ -1,0 +1,74 @@
+<script type="text/javascript" language="javascript">
+onunload = function() {
+self.close();
+}
+</script> 
+<form action="/ilinks/drop_link_addon" >
+ <!-- add link -->            
+ <div id="intro">
+	<a href="<%= @address.url%>"><%= @address.url%></a>
+	<input type="hidden" name="url" value="<%=@address.url%>" />
+	<span id="hits"><%= @address.links_count %> <img src="/img/ico/hits.gif" alt="compartido por <%= @address.links_count %> usuarios" /></span>
+ </div>
+
+     <p>
+         <label for="title"><strong>Título del enlace:</strong><br />
+         <input type="text" name="title" value="<%=@address.title%>"  id="title" class="fieldbox wide" />
+         </label>
+     </p>
+     
+     <p>
+         <label for="description"><strong>Descripción:</strong><br />
+         <input type="text" name="description" id="description" value="<%=@address.description%>"  class="fieldbox wide" />
+         </label>
+     </p>
+
+     <p>
+         <label for="privacy"><strong>Visibilidad:</strong><br />
+				<%= select( "link", "privacy", { "Amigos" => "1",
+													"Familia" => "3",
+													"Familia y amigos" => "4",
+					                                "Privada" => "2",
+												    "Pública" => "0"},
+													:html => {:class => 'campo_largo'}) %>         </label>
+     </p>
+
+     <p>
+         <label for="tags"><strong>Etiquetas (Tags) (separadas por comas:</strong><br />
+             <input type="text" name="tags" id="tags" class="fieldbox wide" />
+         </label>
+     </p>
+     
+     <div class="links">
+         <p style="margin-top: 1.6em;"><strong>Añadir enlace a:</strong></p>
+         <ul class="main_menu">
+             <li class="person_l"><input type="checkbox" name="users[]" value="<%=current_user.id%>" id="chk_enlaces" class="hidden" /><a href="javascript:;" onclick="click_link(document.getElementById('chk_enlaces'),this)"><span>Mis enlaces</span></a></li>
+
+<%if current_user.has_family? && current_user.family.moderator?(current_user)-%>
+             <li class="people_l has_children"><input type="checkbox" name="family" id="chk_familia" value="<%=current_user.family.id%>" class="hidden" /><a href="javascript:;" class="mark_all" onclick="mark_all(document.getElementById('familia_children'))">[Seleccionar todos]</a><a href="javascript:;" onclick="click_link(document.getElementById('chk_familia'),this)"><span>Mi familia</span></a>
+               <ul id="familia_children">
+				 <% current_user.family.members.each_with_index do |user, i| -%>
+				   <%if user.id != current_user.id%>
+                 <li class="person_s"><input type="checkbox" name="users[]" value="<%=user.id%>" id="chk_familia_<%=i%>" class="hidden" /><a href="javascript:;" onclick="click_link(document.getElementById('chk_familia_<%=i%>'),this)"><span><%=user.name%></span></a></li>
+                   <%end%>
+				<%end-%>	
+               </ul>                        
+             </li>
+<% end -%>
+<%if current_user.groups.size > 0 -%>
+             <li class="people_l has_children"><input type="checkbox" name="chk_comunidades" id="chk_comunidades" class="hidden" /><a href="javascript:;" class="mark_all" onclick="mark_all(document.getElementById('comunidad_children'))">[Seleccionar todos]</a><a href="javascript:;" onclick="click_link(document.getElementById('chk_comunidades'),this)"><span>Mis comunidades</span></a>
+               <ul id="comunidad_children">
+				 <% current_user.groups.each_with_index do |group, i| -%>
+                 <li class="people_s"><input type="checkbox" name="community[]" value="<%=group.id%>" id="chk_comunidad_<%=i%>" class="hidden" /><a href="javascript:;" onclick="click_link(document.getElementById('chk_comunidad_<%=i%>'),this)"><span><%=group.name%></span></a></li>
+				<%end-%>
+               </ul>                        
+             </li>
+<% end -%>
+         </ul>    
+     </div> <!-- /.links -->
+
+     <p class="center"><input type="submit" class="button" value="Enviar" name="bntsubmit"/></p>                
+ </form>
+ <!-- /add link -->
+ 
+
