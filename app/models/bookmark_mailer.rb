@@ -1,9 +1,7 @@
-class LinkMailer < TogMailer
+class BookmarkMailer < ActionMailer::Base
   
   def admin_authorization(link, user, moderator, group)
     setup_email(user.email, moderator.email)
-    @subject    += ' Link sugerido para la comunidad ' + group.name
-    @body[:url]  = groups_pending_links_url(group)
     @body[:user] = user  
     @body[:link] = link 
     @body[:group] = group  
@@ -12,14 +10,10 @@ class LinkMailer < TogMailer
     message = Message.new(
       :from     => user,
       :to       => moderator,
-      :subject  => 'Link sugerido para la comunidad ' + group.name,
-      :content  => 'Hola '+moderator.name+'! El usuario de Myfamilypedia, <a href="'+profiles_show_url(user.profile)+'">'+ user.name + '</a>, ha sugerido la siguiente web:'+
-           '<a target="_blank" href="'+link.url.url+'">'+link.url.url+ '</a> (compartida ' + link.url.links_count.to_s + ' veces) ' + 
-           'para la comunidad ' + group.name + '<br/><br/>' +
-           'Para decidir aceptarla o no, pulsa aquí:'+
-           '<a href="' + @body[:url] + '">' + @body[:url] + '</a><br/><br/>' +
-           '<a href="'+groups_accept_link_path(group, link)+'">Aceptar</a>&nbsp;' +
-           '<a href="'+groups_reject_link_path(group, link)+'">Rechazar</a>'
+      :subject  => 'Link compartido con la comunidad ' + group.name,
+      :content  => 'Hola '+moderator.login+'! El usuario, <a href="'+profile_path(user.profile)+'">'+ user.login + '</a>, ha compartido la siguiente web:'+
+           '<a target="_blank" href="'+link.url.url+'">'+link.url.url+ '</a>' + 
+           'con la comunidad ' + group.name + '<br/>'
     )
     message.dispatch!        
   end

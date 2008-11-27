@@ -11,6 +11,7 @@ class Bookmark < ActiveRecord::Base
   
   attr_accessor :new_bookmark
   
+  belongs_to :address
   belongs_to :url, :class_name =>'Address', :foreign_key => 'address_id', :counter_cache => true
   belongs_to :owner, :polymorphic => true, :foreign_key =>'owner_id'
   
@@ -85,7 +86,14 @@ class Bookmark < ActiveRecord::Base
   end
 
   def authorized_destroy(user)
-    return self.owner == user
+    
+    if self.owner_type == 'User'
+      return self.owner == user
+    else 
+      if self.owner_type == 'Group'
+        self.owner.moderators.include?(user)
+      end
+    end
   end
 
   def authorized_all(user)

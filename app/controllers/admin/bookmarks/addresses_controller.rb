@@ -1,7 +1,7 @@
 class Admin::Bookmarks::AddressesController < Admin::BaseController 
   
   def index
-    @addresses = Address.paginate :per_page => 20,
+    @addresses = Address.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
                                   :page => params[:page], 
                                   :order => 'title'
     
@@ -20,10 +20,10 @@ class Admin::Bookmarks::AddressesController < Admin::BaseController
       @address = Address.find(params[:id])
       @address.update_attributes!(params[:address])
       @address.save
-      flash['ok'] = "Updated successfully"      
+      flash['ok'] = I18n.t("tog_bookmarks.admin.update_address_ok")      
       redirect_to :action => 'show', :id => params[:id]
     rescue ActiveRecord::RecordInvalid
-      flash['error'] = "Problem updating address"
+      flash['error'] = I18n.t("tog_bookmarks.admin.update_address_error")
       render :action => 'show', :id => params[:id]  
   end  
 

@@ -5,7 +5,7 @@ class Bookmarks::AddressesController < ApplicationController
     @order = params[:order] || 'bookmarks_count'
     @page = params[:page] || '1'
     @asc = params[:asc] || 'desc'    
-    @addresses = Address.paginate :per_page => 10,
+    @addresses = Address.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
                                   :page => @page,
                                   :order => @order + " " + @asc 
     @asc = @asc == 'asc' ? 'desc' : 'asc' 
@@ -15,8 +15,6 @@ class Bookmarks::AddressesController < ApplicationController
     end                                                   
   end
   
-  # GET /links/1
-  # GET /links/1.xml
   def show
     @address = Address.find(params[:id])
     
