@@ -1,5 +1,5 @@
 namespace :bookmarks do |bookmark|
-  bookmark.resources :addresses
+  bookmark.resources :addresses, :collection => {:tags => :get}
 end
 
 namespace(:member) do |member| 

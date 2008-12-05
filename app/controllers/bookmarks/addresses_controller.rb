@@ -30,5 +30,8 @@ class Bookmarks::AddressesController < ApplicationController
     end
   end
 
-  
+  def tags
+    @tag  =  params[:tag]
+    @bookmarks = Bookmark.find_tagged_with(params[:tag])
+  end
 end

@@ -110,24 +110,22 @@ class Bookmark < ActiveRecord::Base
     return newbmk
   end  
   
-  def Bookmark.create_bookmark(addr, owner, title='', description='', tags='', privacy=0)
+  def Bookmark.create_bookmark(addr, owner, params)
       bookmark = Bookmark.find(:first,
                         :conditions =>["address_id = ? AND owner_id = ? AND owner_type = ?",addr.id,owner.id,owner.class.name])
       if(bookmark.blank?)
         bookmark = Bookmark.new
-        #FIXME privacy not working for bookmarks
-        bookmark.url = addr
-        bookmark.privacy = privacy
-        bookmark.owner = owner
-        bookmark.title = title == '' ? addr.title : title
-        bookmark.description = description == '' ? addr.description : description
-        bookmark.tag_list if tags != ''  
-        bookmark.make_activation_code
-        bookmark.save  
-        bookmark.new_bookmark = true
-        addr.bookmarks << bookmark
-            
       end
+      bookmark.url = addr
+      bookmark.owner = owner
+      bookmark.privacy = params[:privacy]
+      bookmark.title = params[:title] == '' ? addr.title : params[:title]
+      bookmark.description = params[:description] == '' ? addr.description : params[:description]
+      bookmark.tag_list = params[:tag_list]
+      bookmark.make_activation_code
+      bookmark.save  
+      bookmark.new_bookmark = true
+      addr.bookmarks << bookmark
       bookmark
   end  
  
