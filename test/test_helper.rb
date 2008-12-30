@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../../config/environme
 require 'test_help'
 require 'test/unit'
 
+require 'mocha'
+require 'shoulda'
 require 'factory_girl'
 require File.expand_path(File.dirname(__FILE__) + '/factories')
 

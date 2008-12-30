@@ -10,7 +10,7 @@ class Bookmark < ActiveRecord::Base
   acts_as_taggable
   
   attr_accessor :new_bookmark
-  
+  record_activity_of :owner
   belongs_to :address
   belongs_to :url, :class_name =>'Address', :foreign_key => 'address_id', :counter_cache => true
   belongs_to :owner, :polymorphic => true, :foreign_key =>'owner_id'
@@ -39,6 +39,11 @@ class Bookmark < ActiveRecord::Base
   end
   
   after_create :make_activation_code
+  
+  def self.site_search(query, search_options={})
+    sql = "%#{query}%"
+    Bookmark.find(:all, :conditions => ["title like ? or description like ?", sql, sql])
+  end
   
   def make_activation_code
     self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )

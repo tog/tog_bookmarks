@@ -1,18 +1,18 @@
 <table class="tableB">
   <thead>
     <tr>
-      <th scope="col">abuse?</th>
       <th scope="col"><%= I18n.t("tog_bookmarks.admin.title") %></th>
       <th scope="col"><%= I18n.t("tog_bookmarks.admin.url") %></th>
       <th scope="col"><%= I18n.t("tog_bookmarks.admin.count") %></th>
       <th scope="col"><%= I18n.t("tog_bookmarks.admin.created_by") %></th>
       <th scope="col"><%= I18n.t("tog_bookmarks.admin.created_at") %></th>
+      <th scope="col">&nbsp;</th>
     </tr>
   </thead>
 <%if !@addresses.empty?%>  
   <tfoot>
     <tr>
-      <td colspan="4" class="info_results">
+      <td colspan="6" class="info_results">
         <span class="info_items"><%= page_entries_info @addresses %></span>
         <span class="pages_navigation right">
           <%= will_paginate @addresses, :container => false %>
@@ -25,14 +25,13 @@
     <% @addresses.each do |addr| %>
 
     <tr<%= cycle(' class="pair"','') -%>>
-      <td><%= addr.abuse? %></td>
   	  <td><%= link_to addr.title, admin_bookmarks_address_path(addr.id) %></td>
     	<td><%= addr.url%></td>
     	<td><%= addr.bookmarks_count%></td>
     	<td><%= link_to addr.owner.login, edit_admin_user_url(addr.owner) %></td>
     	<td class="status"><%=addr.created_at.strftime("%d/%m/%Y")%></td>
+    	<td><%= link_to 'Destroy', admin_bookmarks_address_path(@address), :confirm => I18n.t("tog_bookmarks.admin.delete_confirmation"), :class => 'delete', :method => :delete %></td>
     </tr>  
-
     <% end %>
   </tbody>
 </table>

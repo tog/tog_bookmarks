@@ -24,7 +24,7 @@ function showForm(){
   <p>
   <a class="button" href="javascript:showForm()">Edit</a>
   <%= link_to 'Back', admin_bookmarks_addresses_path, :class => 'button'%>
-  <%= link_to 'Destroy', admin_bookmarks_address_path(@address), :confirm => 'Are you sure you want to destroy this address and all its bookmarks?', :class => 'button delete', :method => :delete %>
+  <%= link_to 'Delete', admin_bookmarks_address_path(@address), :confirm => 'Are you sure you want to destroy this address and all its bookmarks?', :class => 'button delete', :method => :delete %>
   </p>
 </div>
 

@@ -51,7 +51,7 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
 
   def update
     @bookmark = Bookmark.find(params[:id])
-    if @bookmark.authorized_write(user)
+    if @bookmark.authorized_write(current_user)
       @bookmark.update_attributes(params[:bookmark])
       respond_to do |format|
         format.html { redirect_to :back }
@@ -74,10 +74,11 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
     @bookmarks = Bookmark.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
                                    :page => @page, 
                                    :order => 'title',
-                                   :conditions => ['state = ? and owner_id = ? and owner_type = ?', 'active', @profile.user.id, 'User']
+                                   :conditions => ['state = ? and owner_id = ? and owner_type = ? and privacy = ?', 'active', @profile.user.id, 'User',false]
   end
   
   def share_with_group
+    #FIXME remove this, use tog_social's feature
     bookmark_source = Bookmark.find(params[:bookmark][:id])
     group = Group.find(params[:group_id])
     @bookmark = Bookmark.create_bookmark(bookmark_source.url, group,
@@ -100,15 +101,7 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
         end
     end
   end
-  
-  def group_index
-    @group = Group.find(params[:group_id])
-    @page = params[:page] || 1
-    @bookmarks = Bookmark.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
-                                   :page => @page, 
-                                   :order => 'title',
-                                   :conditions => ['state = ? and owner_id = ? and owner_type = ?', 'active', @group.id, 'Group']
-  end
+
   
 private 
   def check_owner
