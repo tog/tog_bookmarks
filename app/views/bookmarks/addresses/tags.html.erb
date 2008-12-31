@@ -1,0 +1,13 @@
+  <div id="info"style="width:25%;margin:20px;float:left">
+    <strong>Tag <%= @tag %></strong>
+  </div>
+  <div style="width:75%">
+  <% unless @bookmarks.blank? %>
+    <% for bookmark in @bookmarks %>
+      <div class="title"><%= link_to bookmark.title, bookmarks_address_path(bookmark.url), :class =>"maincolor3"%></div>
+			<%= link_to bookmark.url.url, bookmark.url.url, :class =>"maincolor3"%><br />
+    <% end %>
+  <% else %>
+    No bookmarks with this tag yet. 
+  <% end %>
+  </div>

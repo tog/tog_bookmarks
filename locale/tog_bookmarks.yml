@@ -1,0 +1,22 @@
+# {{xxx}}
+en:
+  tog_bookmarks:
+    plugin_name: Bookmarks
+    plugin_description: Little plugin for bookmarks
+    site:
+      key: value
+    admin:
+      update_address_ok: Updated successfully
+      update_address_error: Problem updating address
+      title: Title
+      url: URL
+      count: Bookmarks count
+      created_by: Created by
+      author: Author
+      created_at: Created at
+      description: Description
+      links: Links
+      delete_confirmation: Are you sure you want to destroy this address and all its bookmarks?
+    member:
+      bookmark_copy: Bookmark created
+      bookmark_not_copy: You already have this bookmark in your profile      

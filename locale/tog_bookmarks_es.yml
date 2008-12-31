@@ -1,0 +1,22 @@
+# {{xxx}}
+es:
+  tog_bookmarks:
+    plugin_name: Bookmarks
+    plugin_description: Pequeño plugin para la gestión de enlaces
+    site:
+      key: value
+    admin:
+      update_address_ok: Actualizado con éxito
+      update_address_error: Problema al actualizar la dirección
+      title: Título
+      url: URL
+      count: Contador de enlaces
+      created_by: Creado por
+      author: Autor
+      created_at: Creadoel
+      description: Descripción
+      links: Enlances
+      delete_confirmation: ¿Está seguro de querer eliminar esta dirección y todos sus enlaces?
+    member:
+      bookmark_copy: Enlace creado
+      bookmark_not_copy: Ya tienes este enlace en tu perfíl
