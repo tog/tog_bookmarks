@@ -13,6 +13,25 @@ class Address < ActiveRecord::Base
     end
   end
   
+  def add_bookmark(owner, title='', description='', tag_list=nil, privacy=0)
+      bookmark = Bookmark.find(:first,
+                        :conditions =>["address_id = ? AND owner_id = ? AND owner_type = ?",self.id,owner.id,owner.class.name])
+      if(bookmark.blank?)
+        bookmark = Bookmark.new
+        bookmark.new_bookmark = true
+      end
+      bookmark.url = self
+      bookmark.owner = owner
+      bookmark.privacy = privacy
+      bookmark.title = title == '' ? self.title : title
+      bookmark.description = description == '' ? self.description : description
+      bookmark.tag_list = tag_list
+      bookmark.make_activation_code
+      bookmark.save  
+      self.bookmarks << bookmark
+      bookmark
+  end  
+  
   def Address.get_address(url, user, title='', description='')
     url = url[0..url.size-2] if url.rindex('/') == url.size - 1
     addr = Address.find(:first,:conditions =>["url = ?",url])
@@ -29,5 +48,5 @@ class Address < ActiveRecord::Base
     end
     addr
   end
-    
+  
 end

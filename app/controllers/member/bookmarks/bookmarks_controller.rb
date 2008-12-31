@@ -15,7 +15,11 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
   
   def copy
     address = Address.find(params[:id])
-    @bookmark = Bookmark.create_bookmark(address, current_user)
+    @bookmark = address.add_bookmark(current_user, 
+                                     params[:title], 
+                                     params[:description], 
+                                     params[:tag_list], 
+                                     params[:privacy])
   
     if @bookmark.is_new?
       msg = I18n.t("tog_bookmarks.member.bookmark_copy")
@@ -30,21 +34,26 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
   end
 
   def create 
-    @address = Address.get_address(
-               params[:bookmark][:url], 
-               current_user,
-               params[:bookmark][:title], 
-               params[:bookmark][:description])   
-    @bookmark = Bookmark.create_bookmark(@address, current_user,
-                                      params[:bookmark])           
+    @address = Address.get_address(params[:bookmark][:url], 
+                                   current_user,
+                                   params[:bookmark][:title], 
+                                   params[:bookmark][:description])   
+       
+    @bookmark = @address.add_bookmark(current_user, 
+                                      params[:bookmark][:title], 
+                                      params[:bookmark][:description], 
+                                      params[:bookmark][:tag_list], 
+                                      params[:bookmark][:privacy])                                      
+                                      
+                                        
     respond_to do |format|
         if @bookmark.save
-            flash[:ok] = 'Bookmark successfully created.'
+            flash[:ok] = I18n.t("tog_bookmarks.member.bookmark_created") 
             @bookmark.activate!
             format.html { redirect_to :action => 'index'}
         else
           format.html { render :action => "new" }
-          format.xml  { render :xml => @@bookmark.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => @bookmark.errors, :status => :unprocessable_entity }
         end
     end
   end    
@@ -67,48 +76,13 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
       format.xml  { head :ok }
     end
   end     
-
-  def other_user_index
-    @profile = Profile.find(params[:profile_id])
-    @page = params[:page] || 1
-    @bookmarks = Bookmark.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
-                                   :page => @page, 
-                                   :order => 'title',
-                                   :conditions => ['state = ? and owner_id = ? and owner_type = ? and privacy = ?', 'active', @profile.user.id, 'User',false]
-  end
   
-  def share_with_group
-    #FIXME remove this, use tog_social's feature
-    bookmark_source = Bookmark.find(params[:bookmark][:id])
-    group = Group.find(params[:group_id])
-    @bookmark = Bookmark.create_bookmark(bookmark_source.url, group,
-                                      bookmark_source.title, 
-                                      bookmark_source.description,
-                                      bookmark_source.tag_list, 
-                                      bookmark_source.privacy)                                  
-
-    respond_to do |format|
-        if @bookmark.save
-            flash[:ok] = "Enlace compartido con el grupo #{group.name}"
-            group.moderators.each{ |moderator|
-              BookmarkMailer.deliver_admin_authorization(@bookmark, current_user, moderator, group)
-            }
-            @bookmark.activate!
-            format.html { redirect_to :action => 'index'}
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @@bookmark.errors, :status => :unprocessable_entity }
-        end
+  private 
+    def check_owner
+      @bookmark = Bookmark.find(params[:id])
+      if(!@bookmark.authorized_destroy(current_user))
+        redirect_to login_path
+      end
     end
-  end
-
-  
-private 
-  def check_owner
-    @bookmark = Bookmark.find(params[:id])
-    if(!@bookmark.authorized_destroy(current_user))
-      redirect_to login_path
-    end
-  end
   	    
 end

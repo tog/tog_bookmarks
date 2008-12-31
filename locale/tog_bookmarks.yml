@@ -18,5 +18,6 @@ en:
       links: Links
       delete_confirmation: Are you sure you want to destroy this address and all its bookmarks?
     member:
-      bookmark_copy: Bookmark created
-      bookmark_not_copy: You already have this bookmark in your profile      
+      bookmark_copy: Bookmark copied
+      bookmark_not_copy: You already have this bookmark in your profile
+      bookmark_created: Bookmark successfully created

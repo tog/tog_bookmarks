@@ -18,5 +18,6 @@ es:
       links: Enlances
       delete_confirmation: ¿Está seguro de querer eliminar esta dirección y todos sus enlaces?
     member:
-      bookmark_copy: Enlace creado
+      bookmark_copy: Enlace copiado
       bookmark_not_copy: Ya tienes este enlace en tu perfíl
+      bookmark_created: Enlace creado con éxito

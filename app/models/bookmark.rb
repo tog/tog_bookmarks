@@ -105,33 +105,5 @@ class Bookmark < ActiveRecord::Base
     authorized_read(user) && authorized_write(user) && authorized_destroy(user)
   end  
     
-  def share(owner, activate=false)
-    newbmk = self.url.add_bookmark(owner, self.title, self.description,  self.tag_list,  self.privacy)
-    if (activate)
-      newbmk.activate!
-    else
-      newbmk.make_activation_code!
-    end
-    return newbmk
-  end  
-  
-  def Bookmark.create_bookmark(addr, owner, params)
-      bookmark = Bookmark.find(:first,
-                        :conditions =>["address_id = ? AND owner_id = ? AND owner_type = ?",addr.id,owner.id,owner.class.name])
-      if(bookmark.blank?)
-        bookmark = Bookmark.new
-      end
-      bookmark.url = addr
-      bookmark.owner = owner
-      bookmark.privacy = params[:privacy]
-      bookmark.title = params[:title] == '' ? addr.title : params[:title]
-      bookmark.description = params[:description] == '' ? addr.description : params[:description]
-      bookmark.tag_list = params[:tag_list]
-      bookmark.make_activation_code
-      bookmark.save  
-      bookmark.new_bookmark = true
-      addr.bookmarks << bookmark
-      bookmark
-  end  
- 
+   
 end
