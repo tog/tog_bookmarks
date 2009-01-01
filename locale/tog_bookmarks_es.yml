@@ -13,9 +13,13 @@ es:
       count: Contador de enlaces
       created_by: Creado por
       author: Autor
-      created_at: Creadoel
+      created_at: Fecha de creación
       description: Descripción
-      links: Enlances
+      links: Enlaces
+      details: Detalles
+      edit: Editar
+      update: Actualizar
+      delete: Eliminar
       delete_confirmation: ¿Está seguro de querer eliminar esta dirección y todos sus enlaces?
     member:
       bookmark_copy: Enlace copiado

@@ -1,15 +1,15 @@
 8
 
 dir
-0
+525
 https://svn.larnaby.net/repos/asesorestic/trunk/vendor/plugins/tog_bookmarks/app/views/bookmarks/bookmarks
 https://svn.larnaby.net/repos/asesorestic
-add
 
 
 
-
-
+2008-12-31T17:59:23.023474Z
+525
+molpe
 
 
 svn:special svn:externals svn:needs-lock
@@ -19,5 +19,10 @@ file
 
 
 
-add
+
+2008-12-31T12:09:05.000000Z
+d41d8cd98f00b204e9800998ecf8427e
+2008-12-31T17:59:23.023474Z
+525
+molpe
 

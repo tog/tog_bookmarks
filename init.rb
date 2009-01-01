@@ -9,9 +9,9 @@ end
 
 Tog::Plugins.helpers Bookmarks::AddressesHelper
 
-Tog::Interface.sections(:site).add "Links", "/bookmarks/addresses"     
-Tog::Interface.sections(:member).add "Links", "/member/bookmarks/bookmarks"     
-Tog::Interface.sections(:admin).add "Links", "/admin/bookmarks/addresses"
+Tog::Interface.sections(:site).add "Bookmarks", "/bookmarks/addresses"     
+Tog::Interface.sections(:member).add "Bookmarks", "/member/bookmarks/bookmarks"     
+Tog::Interface.sections(:admin).add "Bookmarks", "/admin/bookmarks/addresses"
 
 Tog::Plugins.settings :tog_bookmarks,  'pagination_size' => "10"
 

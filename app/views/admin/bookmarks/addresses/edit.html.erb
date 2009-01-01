@@ -1,0 +1,29 @@
+<h1><%= link_to I18n.t("tog_bookmarks.plugin_name"), admin_bookmarks_addresses_path%> /  <%= link_to @address.title, admin_bookmarks_address_path(@address.id) %></h1>
+
+<%= error_messages_for :address %>
+
+<% form_for :address, :url => admin_bookmarks_address_path(@address), :html => {:id => "edit_form", :method => :put} do |f| -%>
+
+  <table class="tableA">
+    <caption><%= I18n.t("tog_bookmarks.admin.details") %></caption>
+    <tbody><tr>
+        <th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th>
+
+        <td nowrap="nowrap"><%=f.text_field :title %></td>
+    </tr>
+    <tr>
+        <th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th>
+
+        <td nowrap="nowrap"><%=f.text_field :url %></td>
+    </tr>
+    <tr>
+        <th scope="row"><%= I18n.t("tog_bookmarks.admin.description") %></th>
+        <td nowrap="nowrap"><%=f.text_area :description, :size => '40x6' %></td>
+    </tr>
+  </tbody></table>
+
+  <p>
+    <%= f.submit I18n.t("tog_bookmarks.admin.update"), :class => "button" %>
+  </p>
+
+<% end -%>  

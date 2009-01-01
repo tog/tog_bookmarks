@@ -1,3 +1,5 @@
+<h1><%= I18n.t("tog_bookmarks.plugin_name") %></h1>
+
 <table class="tableB">
   <thead>
     <tr>
@@ -7,12 +9,13 @@
       <th scope="col"><%= I18n.t("tog_bookmarks.admin.created_by") %></th>
       <th scope="col"><%= I18n.t("tog_bookmarks.admin.created_at") %></th>
       <th scope="col">&nbsp;</th>
+      <th scope="col">&nbsp;</th>
     </tr>
   </thead>
 <%if !@addresses.empty?%>  
   <tfoot>
     <tr>
-      <td colspan="6" class="info_results">
+      <td colspan="7" class="info_results">
         <span class="info_items"><%= page_entries_info @addresses %></span>
         <span class="pages_navigation right">
           <%= will_paginate @addresses, :container => false %>
@@ -30,7 +33,8 @@
     	<td><%= addr.bookmarks_count%></td>
     	<td><%= link_to addr.owner.login, edit_admin_user_url(addr.owner) %></td>
     	<td class="status"><%=addr.created_at.strftime("%d/%m/%Y")%></td>
-    	<td><%= link_to 'Destroy', admin_bookmarks_address_path(@address), :confirm => I18n.t("tog_bookmarks.admin.delete_confirmation"), :class => 'delete', :method => :delete %></td>
+    	<td><%= link_to I18n.t("tog_bookmarks.admin.edit"), edit_admin_bookmarks_address_path(addr), :class => 'button' %></td>
+    	<td><%= link_to I18n.t("tog_bookmarks.admin.delete"), admin_bookmarks_address_path(addr), :confirm => 'Are you sure you want to destroy this address and all its bookmarks?', :class => 'button delete', :method => :delete %></td>
     </tr>  
     <% end %>
   </tbody>

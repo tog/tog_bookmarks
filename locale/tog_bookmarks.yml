@@ -16,6 +16,10 @@ en:
       created_at: Created at
       description: Description
       links: Links
+      details: Details
+      edit: Edit
+      update: Update
+      delete: Delete
       delete_confirmation: Are you sure you want to destroy this address and all its bookmarks?
     member:
       bookmark_copy: Bookmark copied
