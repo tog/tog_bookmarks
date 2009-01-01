@@ -8,17 +8,15 @@
     <caption><%= I18n.t("tog_bookmarks.admin.details") %></caption>
     <tbody><tr>
         <th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th>
-
-        <td nowrap="nowrap"><%=f.text_field :title %></td>
+        <td nowrap="nowrap"><%=f.text_field :title, :class=>"fieldbox" %></td>
     </tr>
     <tr>
         <th scope="row"><%= I18n.t("tog_bookmarks.admin.url") %></th>
-
-        <td nowrap="nowrap"><%=f.text_field :url %></td>
+        <td nowrap="nowrap"><%=f.text_field :url, :class=>"fieldbox" %></td>
     </tr>
     <tr>
         <th scope="row"><%= I18n.t("tog_bookmarks.admin.description") %></th>
-        <td nowrap="nowrap"><%=f.text_area :description, :size => '40x6' %></td>
+        <td nowrap="nowrap"><%=f.text_area :description, :size => '40x6', :class=>"fieldbox" %></td>
     </tr>
   </tbody></table>
 
