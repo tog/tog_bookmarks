@@ -3,7 +3,7 @@
 <p>
 <%= link_to I18n.t("tog_bookmarks.admin.edit"), edit_admin_bookmarks_address_path(@address), :class => 'button' %>
 
-<%= link_to I18n.t("tog_bookmarks.admin.delete"), admin_bookmarks_address_path(@address), :confirm => 'Are you sure you want to destroy this address and all its bookmarks?', :class => 'button delete', :method => :delete %>
+<%= link_to I18n.t("tog_bookmarks.admin.delete"), admin_bookmarks_address_path(@address), :confirm => I18n.t("tog_bookmarks.admin.delete_confirmation"), :class => 'button delete', :method => :delete %>
 </p>
 
 <table>
