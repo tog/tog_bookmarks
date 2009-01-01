@@ -4,7 +4,7 @@
 
 <% form_for :address, :url => admin_bookmarks_address_path(@address), :html => {:id => "edit_form", :method => :put} do |f| -%>
 
-  <table class="tableA">
+  <table class="tableE">
     <caption><%= I18n.t("tog_bookmarks.admin.details") %></caption>
     <tbody><tr>
         <th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th>
@@ -12,7 +12,7 @@
         <td nowrap="nowrap"><%=f.text_field :title %></td>
     </tr>
     <tr>
-        <th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th>
+        <th scope="row"><%= I18n.t("tog_bookmarks.admin.url") %></th>
 
         <td nowrap="nowrap"><%=f.text_field :url %></td>
     </tr>
@@ -23,6 +23,7 @@
   </tbody></table>
 
   <p>
+    <br/>
     <%= f.submit I18n.t("tog_bookmarks.admin.update"), :class => "button" %>
   </p>
 
