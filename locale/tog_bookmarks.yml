@@ -2,6 +2,7 @@
 en:
   tog_bookmarks:
     plugin_name: Bookmarks
+    plugin_title: Bookmarks
     plugin_description: Little plugin for bookmarks
     site:
       key: value

@@ -1,4 +1,4 @@
-<h1><%= link_to I18n.t("tog_bookmarks.plugin_name"), admin_bookmarks_addresses_path%> / <%=@address.title%></h1>
+<h1><%= link_to I18n.t("tog_bookmarks.plugin_title"), admin_bookmarks_addresses_path%> / <%=@address.title%></h1>
 
 <p>
 <%= link_to I18n.t("tog_bookmarks.admin.edit"), edit_admin_bookmarks_address_path(@address), :class => 'button' %>
@@ -6,11 +6,11 @@
 <%= link_to I18n.t("tog_bookmarks.admin.delete"), admin_bookmarks_address_path(@address), :confirm => I18n.t("tog_bookmarks.admin.delete_confirmation"), :class => 'button delete', :method => :delete %>
 </p>
 
-<table>
-	<tr><td><%= I18n.t("tog_bookmarks.admin.title") %></td><td><%=@address.title%></td></tr>
-	<tr><td><%= I18n.t("tog_bookmarks.admin.url") %></td><td><%=@address.url%></td></tr>	
-	<tr><td><%= I18n.t("tog_bookmarks.admin.description") %></td><td><%=@address.description%></td></tr>	
-	<tr><td><%= I18n.t("tog_bookmarks.admin.count") %></td><td><%=@address.bookmarks_count%></td></tr>	
-  <tr><td><%= I18n.t("tog_bookmarks.admin.author") %></td><td><%= link_to @address.owner.login, edit_admin_user_url(@address.owner) %></td></tr>
-  <tr><td><%= I18n.t("tog_bookmarks.admin.created_at") %></td><td><%=@address.created_at%></td></tr>
+<table class="tableE">
+	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th><td><%=@address.title%></td></tr>
+	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.url") %></th><td><%=@address.url%></td></tr>	
+	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.description") %></th><td><%=@address.description%></td></tr>	
+	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.count") %></th><td><%=@address.bookmarks_count%></td></tr>	
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.author") %></th><td><%= link_to @address.owner.login, edit_admin_user_url(@address.owner) %></td></tr>
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.created_at") %></th><td><%=@address.created_at%></td></tr>
 </table>

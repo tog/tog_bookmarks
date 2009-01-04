@@ -2,6 +2,7 @@
 es:
   tog_bookmarks:
     plugin_name: Bookmarks
+    plugin_title: Enlaces    
     plugin_description: Pequeño plugin para la gestión de enlaces
     site:
       key: value
