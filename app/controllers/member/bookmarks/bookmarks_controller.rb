@@ -15,11 +15,7 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
   
   def copy
     address = Address.find(params[:id])
-    @bookmark = address.add_bookmark(current_user, 
-                                     params[:title], 
-                                     params[:description], 
-                                     params[:tag_list], 
-                                     params[:privacy])
+    @bookmark = address.add_bookmark(current_user)
   
     if @bookmark.is_new?
       msg = I18n.t("tog_bookmarks.member.bookmark_copy")

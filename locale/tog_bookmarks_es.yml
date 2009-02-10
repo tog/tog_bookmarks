@@ -1,5 +1,12 @@
 # {{xxx}}
 es:
+  interface:
+    admin:
+      bookmarks: Enlaces
+    member:
+      bookmarks: Enlaces
+    site:
+      bookmarks: Enlaces
   tog_bookmarks:
     plugin_name: Bookmarks
     plugin_title: Enlaces    
