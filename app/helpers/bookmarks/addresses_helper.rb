@@ -21,4 +21,8 @@ module Bookmarks::AddressesHelper
       yield tag, classes[index]
     end
   end
+  
+  def snapshot_image(address, size=150)
+    image_tag "http://api.thumbalizr.com/?url=#{address.url}&width=#{size}"
+  end
 end
