@@ -7,7 +7,7 @@
 		            <li class="clearfix">
 
 		                <div class="info">
-		                    <%= link_to address.title, bookmarks_address_path(address.url), :class =>"maincolor3"%>
+		                    <%= link_to address.title, bookmarks_address_path(address.id), :class =>"maincolor3"%>
 		                    <span class="members maincolor2">Compartido por <%=link_to(address.owner.name, profile_path(address.owner.profile), :class => 'maincolor3') %></span> 
 		                    <span class="hits maincolor3"><%= address.bookmarks_count %> <img src="/img/ico/hits.gif" alt="compartido por <%= address.bookmarks_count %> usuarios" title="compartido por <%= address.bookmarks_count %> usuarios" /></span>		
 		                </div>
