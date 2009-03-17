@@ -33,3 +33,7 @@ en:
       bookmark_copy: Bookmark copied
       bookmark_not_copy: You already have this bookmark in your profile
       bookmark_created: Bookmark successfully created
+    address:
+      site:
+        title: Links
+        most_shared: links most shared

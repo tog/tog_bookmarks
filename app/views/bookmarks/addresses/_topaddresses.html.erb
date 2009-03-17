@@ -1,5 +1,5 @@
 <div class="portlet_redsocial lightblue">
-    <div class="portlet_title"><strong>Top 5 enlaces</strong><a href="/links.rss" class="rss"><img src="/img/ico/rss.gif" alt="Sindicación rss" /></a></div>
+    <div class="portlet_title"><strong>Top 5 enlaces</strong><%=link_to image_tag("/img/ico/rss.gif"), bookmarks_addresses_path(:format=> :rss),:class=>"rss"%></div>
     <div class="portlet_content">
         <ul class="list3">
 		            <% top_addresses.each do |address| %>

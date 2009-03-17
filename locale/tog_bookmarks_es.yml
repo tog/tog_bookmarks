@@ -33,3 +33,7 @@ es:
       bookmark_copy: Enlace copiado
       bookmark_not_copy: Ya tienes este enlace en tu perfíl
       bookmark_created: Enlace creado con éxito
+    address:
+      site:
+        title: Enlaces
+        most_shared: Los {{size}} enlace más compartidos

@@ -25,7 +25,7 @@
             <div class="rightcol_inside">
 
 		    <div class="title1 maincolor4 rss">Enlaces
-		        <a href="/links.rss" class="rss"><img src="/img/ico/rss.gif" alt="Sindicación rss" /></a>
+				<%=link_to image_tag("/img/ico/rss.gif"), bookmarks_addresses_path(:format=> :rss),:class=>"rss"%>
 		    </div>
 
 			Ordenar por:
@@ -53,7 +53,7 @@
 				</div> <!-- .padding1 -->
 				<br />
 		        <div class="pages_navigation big">
-		             <%= will_paginate %>
+		             <%= will_paginate @addresses%>
 		        </div>
 
 
