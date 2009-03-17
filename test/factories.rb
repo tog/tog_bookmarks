@@ -6,7 +6,7 @@ Factory.define :user do |u|
   u.email {|a| "#{a.login}@example.com".downcase }
 end
 
-Factory.define :addresses do |addr|
+Factory.define :address do |addr|
   addr.description 'this is a site'
   addr.title {|a| "title_#{a.url}" }
 end

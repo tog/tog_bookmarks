@@ -7,7 +7,7 @@ class BookmarkTest < Test::Unit::TestCase
       @user1 = Factory(:user, :login => 'chavez')  
       @user2 = Factory(:user, :login => 'evo')  
 
-      @address1 = Factory(:addresses, :url => 'http://www.toghq.com?' + Time.now.to_i.to_s)  
+      @address1 = Factory(:address, :url => 'http://www.toghq.com?' + Time.now.to_i.to_s)  
     end
     
     should "count 1 each time a bookmark is created" do
