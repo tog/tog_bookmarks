@@ -9,7 +9,7 @@ xml.rss(:version=>"2.0"){
 	          xml.title(a.title + " (" + a.bookmarks.count.to_s + ")")
 	          xml.description(a.description)      
 	          xml.pubDate(a.created_at.strftime("%a, %d %b %Y %H:%M:%S %z"))
-	          xml.author(a.owner.name)  
+	          xml.author(a.owner.login)  
 	          xml.link(bookmarks_address_url(a))               
 	          xml.guid(a.id)
 	        end
