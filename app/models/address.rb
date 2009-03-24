@@ -1,3 +1,5 @@
+require 'uri'
+
 class Address < ActiveRecord::Base
   acts_as_commentable
   acts_as_abusable  
@@ -5,13 +7,14 @@ class Address < ActiveRecord::Base
   belongs_to :owner, :class_name =>'User', :foreign_key =>'author_id'
   has_many :bookmarks, :class_name =>'Bookmark', :foreign_key =>'address_id', :dependent => :destroy
 
-  before_save :normalize_url 
+  before_save :normalize_url
+  before_save :get_host 
   
   def normalize_url
     if self.url[0..."http".length] != "http"
       self.url = "http://" + self.url
     end
-  end
+  end  
   
   def add_bookmark(owner, title='', description='', tag_list=nil, privacy=0)
       bookmark = Bookmark.find(:first,
@@ -48,5 +51,11 @@ class Address < ActiveRecord::Base
     end
     addr
   end
+  
+  protected
+  
+    def get_host
+      self.host = URI.parse(self.url).host
+    end
   
 end
