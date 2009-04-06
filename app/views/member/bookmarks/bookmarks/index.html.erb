@@ -3,7 +3,7 @@
 %>
 
 <div id="pagebody" class="clearfix">
-    <h2 class="maintitle clearfix"> <span class="icon perfil">Mi perfil</span></h2>
+    <h2 class="maintitle clearfix"> <span class="icon perfil"></span></h2>
     
     <div id="sidebar_1">
 
@@ -21,9 +21,9 @@
 
         <div id="section_enlaces">
             <div class="menu clearfix maincolor4">
-                <span class="title">Enlaces</span>
+                <span class="title"><%=I18n.t("interface.site.bookmarks")%></span>
 
-                <span class="new"><%= link_to_function 'Nuevo enlace',"Form.reset('f_new');Element.toggle('bookmarks');Effect.toggle('f_new','slide')", :class => 'maincolor4'%></span>
+                <span class="new"><%= link_to_function I18n.t("tog_bookmarks.member.new_link"),"Form.reset('f_new');Element.toggle('bookmarks');Effect.toggle('f_new','slide')", :class => 'maincolor4'%></span>
                 
             </div>
             <div class="section_content twocols_inside clearfix">
@@ -32,16 +32,16 @@
 
                 <ul class="categories">
                     <li class="on person">
-                        <a href="/ilinks" class="maincolor2" title="arrastra un link aquí para copiartelo en tu perfíl"><span>Mis enlaces</span></a>
+                        <a href="/ilinks" class="maincolor2" title="<%=I18n.t("tog_bookmarks.member.drag_and_drop")%>"><span><%= I18n.t("tog_bookmarks.member.my_links"%></span></a>
                     </li>
 <% if @profile.user.has_family? -%>
                     <li class="haschildren people">
-                        <li><a href="/ilinks/family" class="maincolor2" id="family_<%=@profile.user.family.id%>" title="arrastra un link aquí para asignárselo a tu familia y todos sus miembros"><span>Toda mi familia</span></a></li>
+                        <li><a href="/ilinks/family" class="maincolor2" id="family_<%=@profile.user.family.id%>" title="<%=I18n.t("tog_bookmarks.member.drag_and_drop")%>"><span>Toda mi familia</span></a></li>
                         <%= drop_receiving_element("family_#{@profile.user.family.id}", :url => { :action => "drop_link", :family_id => @profile.user.family.id }) %>
                         <ul>
 						  <% for rel in  @profile.user.family.members %>	
 							<% if rel.id != @profile.user_id %>
-							<li><a href="/ilinks/user/<%=rel.id%>" class="maincolor2" id="related_<%=rel.id%>" title="arrastra un link sobre este usuario para asignárselo"><span><%=rel.name%></span></a></li>
+							<li><a href="/ilinks/user/<%=rel.id%>" class="maincolor2" id="related_<%=rel.id%>" title="<%=I18n.t("tog_bookmarks.member.drag_and_drop")%>"><span><%=rel.name%></span></a></li>
 							<%= drop_receiving_element("related_#{rel.id}", :url => { :action => "drop_link", :related_id => rel.id }) %>
 						    <% end -%>
 						  <% end -%>	
@@ -52,7 +52,7 @@
                         <a href="#" class="maincolor2"><span>Mis comunidades</span></a>
                         <ul>
                           <% for community in  @profile.user.groups %>	
-						<li><a href="/ilinks/community/<%=community.id%>" class="maincolor2" id="community_<%=community.id%>"  title="arrastra un link sobre esta comunidad para asignárselo"><span><%= community.name %></span></a></li>
+						<li><a href="/ilinks/community/<%=community.id%>" class="maincolor2" id="community_<%=community.id%>"  title="<%=I18n.t("tog_bookmarks.member.drag_and_drop")%>"><span><%= community.name %></span></a></li>
 						<%= drop_receiving_element("community_#{community.id}", :url => { :action => "drop_link", :community_id => community.id }) %>
 						  <% end -%>
                         </ul>                                    
@@ -65,29 +65,29 @@
                     <div id="bookmarks">
                   
                     <ul class="enlaces_list">
-	<li><div class="title">Your bookmarks</div>
-		<div id="feedback_msg" style="display:none;"><br/><div class="notice">Enlace añadido correctamente</div></div>
+	<li><div class="title"><%= I18n.t("tog_bookmarks.member.my_links"%></div>
+		<div id="feedback_msg" style="display:none;"><br/><div class="notice"><%= I18n.t("tog_bookmarks.member.bookmark_copy"%></div></div>
 		</li>
 <div id='enlaces'>
 <% if not @bookmarks.blank?%>
 
    <% @bookmarks.each do |bookmark| %>
-<li id="enlace_<%=bookmark.id%>" class="enlace" title="Pincha y arrastra para compartir este link con tus amigos o comunidades">
+<li id="enlace_<%=bookmark.id%>" class="enlace" title="<%=I18n.t("tog_bookmarks.member.drag_and_drop")%>">
         <div class="title"><%= link_to bookmark.title, bookmarks_address_path(bookmark.url), :class =>"maincolor3"%></div>
         <div class="url maincolor2"><%=bookmark.url.url%>
             <br/>
-            Compartido por <%= link_to bookmark.url.owner.login, profile_path(bookmark.url.owner.profile), :class => 'maincolor2' %>
+            <%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(address.owner.name, profile_path(address.owner.profile), :class => 'maincolor2')) %>
         </div>
 
         <div class="metainfo">
 
-        <span class="hits maincolor3"><%= bookmark.url.bookmarks_count %> <img src="/img/ico/hits.gif" alt="compartido por <%= bookmark.url.bookmarks_count %> usuarios" title="compartido por <%= bookmark.url.bookmarks_count %> usuarios" /></span>
+        <span class="hits maincolor3"><%= bookmark.url.bookmarks_count %> <img src="/img/ico/hits.gif" alt="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" /></span>
         </div>
 </li>
    <%end -%>
 
 <%else%>
-  No hay enlaces.
+  <%=I18n.t("tog_bookmarks.site.no_bookmarks")%>
 <%end%>
 </div>
   					</ul>
@@ -103,17 +103,17 @@
 
     <% form_for :bookmark, :url => member_bookmarks_bookmarks_path, :html => {:id => 'f_new', :style => 'display:none', :method => "post"} do |f| -%>
     
-        <div class="title1 maincolor4">Nuevo enlace para el usuario <%=current_user.name%></div>
+        <div class="title1 maincolor4"><%= I18n.t("tog_bookmarks.member.new_link")%></div>
         <div class="content clearfix">
             <dl class="left">
-                  <dt><label for="titulo">Titulo</label></dt>
+                  <dt><label for="titulo"><%= I18n.t("tog_bookmarks.address.title")%></label></dt>
                   <dd><%= f.text_field :title, :class => "wide fieldbox", :size => 30 %></dd>
-                  <dt><label for="url"><acronym lang="en" xml:lang="en" title="Uniform Resource Locator (Localizador Uniforme de Recurso)">URL</acronym></label></dt>
+                  <dt><label for="url"><acronym lang="en" xml:lang="en" title="Uniform Resource Locator (Localizador Uniforme de Recurso)"><%= I18n.t("tog_bookmarks.address.url")%></acronym></label></dt>
                   <dd><%= f.text_field :url, :class => "wide url", :size => 30 %></dd>
             </dl> 
             
             <dl class="right">                  
-                  <dt><label for="visibilidad">Visibilidad</label></dt>
+                  <dt><label for="visibilidad"><%= I18n.t("tog_bookmarks.address.visibility")%></label></dt>
                   <dd>	<%= select( "bookmark", "privacy", { "Amigos" => "1",
 														"Familia" => "3",
 														"Familia y amigos" => "4",
@@ -123,17 +123,17 @@
             </dl> 
             
             <dl class="clear">
-                  <dt><label for="tags">Etiquetas (Tags) (separados por comas):</label></dt>
+                  <dt><label for="tags"><%= I18n.t("tog_bookmarks.address.tags")%>:</label></dt>
                   <dd><%= f.text_field :tag_list, :class => "wide fieldbox", :size => 30 %></dd>
                   
-                  <dt><label for="description">Descripción</label></dt>
+                  <dt><label for="description"><%= I18n.t("tog_bookmarks.address.description")%></label></dt>
                   <dd><%= f.text_area :description, :class => "wide fieldbox", :size => "40x20" %></dd>
             </dl> 
             
             <div class="form_actions">
 
-                <%= submit_tag 'Guardar', :name => 'bntsubmit', :class => 'button1'%>
-                <%= button_to_function 'Cancelar',"Element.slideUp('f_new');Element.toggle('ilinks');Form.reset('f_edit');",  :class => 'button1'%>
+                <%= submit_tag I18n.t("tog_bookmarks.member.save"), :name => 'bntsubmit', :class => 'button1'%>
+                <%= button_to_function I18n.t("tog_bookmarks.member.cancel"),"Element.slideUp('f_new');Element.toggle('ilinks');Form.reset('f_edit');",  :class => 'button1'%>
             </div>
         </div> <!-- .content -->
     <% end -%>

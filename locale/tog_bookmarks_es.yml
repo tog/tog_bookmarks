@@ -12,7 +12,20 @@ es:
     plugin_title: Enlaces    
     plugin_description: Pequeño plugin para la gestión de enlaces
     site:
-      key: value
+      link: Enlace
+      search: Buscar enlaces
+      last_links: Últimos {{number}} enlaces
+      top_links: Top {{number}} enlaces
+      shared_by: Compartido por {{user}}
+      shared_by_number: Compartido por {{number}} usuarios
+      see_all: ver todos
+      copy_link: Copiar este enlace a tu perfil
+      links_number: Número de links
+      order_by: Ordenar por
+      in_your_profile: Este enlace está en tu perfil
+      tag: Tag
+      no_bookmarks: No hay enlaces.
+      no_bookmarks_with_tag: No hay enlaces para este tag
     admin:
       update_address_ok: Actualizado con éxito
       update_address_error: Problema al actualizar la dirección
@@ -33,7 +46,20 @@ es:
       bookmark_copy: Enlace copiado
       bookmark_not_copy: Ya tienes este enlace en tu perfíl
       bookmark_created: Enlace creado con éxito
+      my_links: Mis enlaces
+      new_link: Nuevo enlace
+      drag_and_drop: arrastra un link aquí para copiarlo
+      save: Guardar
+      cancel: Cancelar
     address:
+      title: Título
+      url: URL
+      created_by: Creado por
+      author: Autor
+      created_at: Fecha de creación
+      description: Descripción
+      visibility: Visibilidad
+      tags: Etiquetas (Tags) (separados por comas)
       site:
         title: Enlaces
         most_shared: Los {{size}} enlace más compartidos

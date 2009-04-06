@@ -12,7 +12,20 @@ en:
     plugin_title: Bookmarks
     plugin_description: Little plugin for bookmarks
     site:
-      key: value
+      link: Bookmark
+      search: Search
+      last_links: Last {{number}} bookmarks
+      top_links: Top {{number}} bookmarks
+      shared_by: Shared by {{user}}
+      shared_by_number: Shared by {{number}} users
+      see_all: see all
+      copy_link: Copy this link
+      links_number: Links number
+      order_by: Order by
+      in_your_profile: This link already is in your profile
+      tag: Tag
+      no_bookmarks: No bookmarks.
+      no_bookmarks_with_tag: No bookmarks for this tag
     admin:
       update_address_ok: Updated successfully
       update_address_error: Problem updating address
@@ -33,7 +46,20 @@ en:
       bookmark_copy: Bookmark copied
       bookmark_not_copy: You already have this bookmark in your profile
       bookmark_created: Bookmark successfully created
+      my_links: My bookmarks
+      new_link: New bookmark
+      drag_and_drop: Drag and drop this bookmark to copy
+      save: Save
+      cancel: Cancel
     address:
+      title: Title
+      url: URL
+      created_by: Created by
+      author: Author
+      created_at: Created at
+      description: Description
+      visibility: Visibility
+      tags: Tags
       site:
         title: Links
         most_shared: links most shared

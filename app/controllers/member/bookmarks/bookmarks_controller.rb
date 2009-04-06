@@ -8,7 +8,6 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
     @page = params[:page] || 1
     @bookmarks = Bookmark.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
                                    :page => @page, 
-                                   :order => 'title',
                                    :conditions => ['state = ? and owner_id = ? and owner_type = ?', 'active', current_user.id, 'User']
                                    
   end

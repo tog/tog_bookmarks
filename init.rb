@@ -15,4 +15,4 @@ Tog::Interface.sections(:admin).add "Bookmarks", "/admin/bookmarks/addresses"
 
 Tog::Plugins.settings :tog_bookmarks,  'pagination_size' => "10"
 
-Tog::Search.sources << "Bookmark"     
+Tog::Search.sources << "Address"

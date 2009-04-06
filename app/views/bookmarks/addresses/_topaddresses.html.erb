@@ -1,5 +1,5 @@
 <div class="portlet_redsocial lightblue">
-    <div class="portlet_title"><strong>Top 5 enlaces</strong><%=link_to image_tag("/img/ico/rss.gif"), bookmarks_addresses_path(:format=> :rss),:class=>"rss"%></div>
+    <div class="portlet_title"><strong><%= I18n.t("tog_bookmarks.site.top_links",:number=>"5") %></strong><%=link_to image_tag("/img/ico/rss.gif"), bookmarks_addresses_path(:format=> :rss),:class=>"rss"%></div>
     <div class="portlet_content">
         <ul class="list3">
 		            <% top_addresses.each do |address| %>
@@ -8,8 +8,8 @@
 
 		                <div class="info">
 		                    <%= link_to address.title, bookmarks_address_path(address.id), :class =>"maincolor3"%>
-		                    <span class="members maincolor2">Compartido por <%=link_to(address.owner.name, profile_path(address.owner.profile), :class => 'maincolor3') %></span> 
-		                    <span class="hits maincolor3"><%= address.bookmarks_count %> <img src="/img/ico/hits.gif" alt="compartido por <%= address.bookmarks_count %> usuarios" title="compartido por <%= address.bookmarks_count %> usuarios" /></span>		
+		                    <span class="members maincolor2"><%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(address.owner.name, profile_path(address.owner.profile), :class => 'maincolor3')) %></span> 
+		                    <span class="hits maincolor3"><%= address.bookmarks_count %> <img src="/img/ico/hits.gif" alt="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" /></span>		
 		                </div>
 		            </li>
 
@@ -18,6 +18,6 @@
         </ul>
 
         
-        <p class="viewall"><a href="/links">ver todos</a></p>
+        <p class="viewall"><%= link_to I18n.t("tog_bookmarks.site.see_all"), bookmarks_addresses_path%></p>
     </div> <!-- .portlet_content -->    
 </div> <!-- .portlet_redsocial -->

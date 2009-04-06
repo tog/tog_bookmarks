@@ -1,5 +1,5 @@
   <div id="info"style="width:25%;margin:20px;float:left">
-    <strong>Tag <%= @tag %></strong>
+    <strong><%=I18n.t("tog_bookmarks.site.tag")%> <%= @tag %></strong>
   </div>
   <div style="width:75%">
   <% unless @bookmarks.blank? %>
@@ -8,6 +8,6 @@
 			<%= link_to bookmark.url.url, bookmark.url.url, :class =>"maincolor3"%><br />
     <% end %>
   <% else %>
-    No bookmarks with this tag yet. 
+    <%=I18n.t("tog_bookmarks.site.no_bookmarks_with_tag")%>
   <% end %>
   </div>

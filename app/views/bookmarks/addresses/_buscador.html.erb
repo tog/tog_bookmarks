@@ -1,10 +1,10 @@
 <div class="menu clearfix">
     <p class="button2 twolines"></p>
-    <form name="f_buscar_item" id="f_buscar_item" action="/links/search">
-        <label for="buscar_item">Buscar enlaces:</label>
-        <br />
-        <input type="text" name="search_term" id="search_term" class="fieldbox"  value="<%=@search_term-%>" />
-        <input type="image" src="/img/ico/greenarrow-1.gif" alt="Buscar" title="Buscar" />
-    </form>
+    <% form_tag(do_search_path, {:method => :post, :id => "f_buscar_item"}) do -%>
+      <label for="f_content_search_field"><%= I18n.t("tog_bookmarks.site.search") %>:</label>
+      <%= text_field_tag :global_search_field,params[:global_search_field], {:class => "fieldbox"} %>
+      <input type ="hidden" id="filter" name="filter" value = 'address' />                   
+      <input type="image" src="/img/ico/greenarrow-1.gif" alt="<%= I18n.t("familypedia.common.search") %>" title="<%= I18n.t("familypedia.common.search") %>" />
+    <% end %>
         
 </div>
