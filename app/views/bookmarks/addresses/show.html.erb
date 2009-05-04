@@ -1,62 +1,60 @@
-<div id="pagebody" class="threecols clearfix">
+<% content_for :sidebar do %>
+<%= render :partial => "bookmarks/addresses/tag_cloud_bookmarks" %>
+<%= render :partial => "bookmarks/addresses/topaddresses" %>        
+<%= render :partial => "bookmarks/addresses/lastaddresses" %>
+<% end %>
 
-    <div id="sidebar_1">
-        
-			<%= render :partial => "/groups/last_groups" %>
-                                   
-    </div> <!-- #sidebar_1 -->
-    
-    
-    
-    <div id="mainzone">  
+<div id="feedback<%=@address.id%>" style="display:none;"><div id="msg<%=@address.id%>" class="notice"></div></div>
+   
+<br/>
 
-    <div class="title1 maincolor4 rss"><%= I18n.t("tog_bookmarks.site.link")%></div>
+<div class="titleA round clearfix">
+  <span class="float_right"><%= render :partial => '/shared/rating', :locals => {:rateable => @address} %></span>
+  <%=@address.title%>
+</div>
+<br/>
 
-    <br />
-	<div id="feedback<%=@address.id%>" style="display:none;"><div id="msg<%=@address.id%>" class="notice"></div></div>
-	<% if flash[:notice] -%>
-	        <div class="notice"><%= flash[:notice] %></div>
-	<% end -%>
-	<% if flash[:error] -%>
-	        <div class="error"><%= flash[:error] %></div>
-	<% end -%>
-	    
-		<div class="padding1">
-
-			<div class="detail1 right_ico">
-		    
-            <div class="title maincolor3"><strong><%=@address.title%></strong></div>
-				<div class="hits_ico right_ico"><%=@address.bookmarks_count%> <img src="/img/ico/hits.gif" alt="compartido <%=@address.bookmarks_count%> veces" title="compartido <%=@address.bookmarks_count%> veces " /></div>
-            <div class="subtitle maincolor2">
+<div class="internal_padding">
+  <div class="perfil">
+      <div class="photo round"><%=snapshot_image(@address)%></div>
+      <div class="text">
                 <a href="<%=@address.url%>" class="maincolor3" target="_blank"><%=@address.url%></a><br />
-				<%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(@address.owner.name, profile_path(@address.owner.profile), :class => 'maincolor5')) %>
-			</div>
-            <div class="text">
-                <p><%=@address.description%></p>                                           
-            </div> 
-			<%if @bookmark%>
-				<div class="maincolor5"><%= I18n.t("tog_bookmarks.site.in_your_profile")%></div>
-			<%else%>
+                Compartido por <%=link_to @address.owner.login, profile_path(@address.owner.profile), :class=> 'maincolor5' %> el <%=@address.created_at.strftime("%d/%m/%Y")%></div>
+      <div class="text">
+          <p><%=@address.description%></p>                                           
+      </div>
+      <div class="text">
+        <% tag_lists = @address.bookmarks.collect{|bookmark|bookmark.tag_list} %>
+        Tags:
+        <% if !tag_lists.blank? %>
+          <% for tags in tag_lists %>
+            <% if !tags.blank? %>
+              <% for tag in tags %>
+                <%= link_to tag, tags_bookmarks_addresses_path(:tag => tag) %>
+              <% end %>
+            <% else %>
+              No tags.
+            <% end %>
+          <% end %>
+        <% else %>
+          No tags.
+        <% end %>
+      </div>
+      <%if @bookmark%>
+        <div class="text">Este enlace está en tu perfil</div>
+      <%else%>
         <%if logged_in?%>
-          <div class="maincolor5">
-             <%= link_to_remote I18n.t("tog_bookmarks.site.copy_link"), :url => copy_member_bookmarks_bookmark_path(@address), :html=> {:class =>'maincolor5'}%> <%= link_to_remote image_tag("/img/ico/add.gif"), :url => copy_member_bookmarks_bookmark_path(@address), :html=> {:class =>'maincolor5'}%>
+          <div class="text">
+             <%= link_to_remote 'Copiar a tu perfil', :url => copy_member_bookmarks_bookmark_path(@address), :html=> {:class =>'button mainaction round'}%> 
           </div>
         <%end%>
-			<%end%>
-			<%if logged_in?-%><%=report_abuse_link(@address, I18n.t("tog_core.site.abuses.report_abuse"), :class => 'maincolor5') %><%end-%>
-        </div>
-        
-		</div> <!-- .padding1 -->
-		
-
-		<%= render :partial => 'shared/comments', :locals => { :commentable => @address } %>
-
-
-    </div> <!-- #mainzone -->
-    <div id="sidebar_2">
-			<%= render :partial => "/bookmarks/addresses/topaddresses" %>
-		    <%= render :partial => "/profiles/lastmembers" %>   
-    </div> <!-- #sidebar_2 -->   
-</div>  <!-- #pagebody -->
-
-  
+      <%end%>
+      <br/>
+      <div id="item_buttons">
+        <%= share_with_groups_link(@address) -%>
+        <%if logged_in?-%><%=report_abuse_link(@address, 'Reportar abuso', :class => 'button mainaction round') %><%end-%>
+      </div>
+  </div>    
+</div>
+<br/><br/>
+<%= render :partial => '/shared/comments', :locals => {:comments => @address.comments, :commentable => @address}%>  

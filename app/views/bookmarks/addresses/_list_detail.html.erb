@@ -1,17 +1,17 @@
 <div id="feedback<%=addr.id%>" style="display:none;"><div id="msg<%=addr.id%>" class="notice"></div></div>
 <li>
-	<div class="title"><%=link_to addr.title, bookmarks_address_path(addr), :class => 'maincolor5'%></div>
-	<span title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>addr.bookmarks_count) %>" class="hits_ico right_ico"><%=addr.bookmarks_count%> <img src="/img/ico/hits.gif" alt="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>addr.bookmarks_count) %>" title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>addr.bookmarks_count) %>" /></span>
+  <div class="title"><%=link_to addr.title, bookmarks_address_path(addr), :class => 'maincolor5'%></div>
+  <span title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>addr.bookmarks_count) %>" class="hits_ico right_ico"><%=addr.bookmarks_count%> <img src="/img/ico/hits.gif" alt="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>addr.bookmarks_count) %>" title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>addr.bookmarks_count) %>" /></span>
 
-	<div class="subtitle">
-		<span class="maincolor2"><%= link_to addr.url, addr.url, :class =>"maincolor3"%><br />
-		<%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(addr.owner.name, profile_path(addr.owner.profile), :class => 'maincolor5')) %>
-		<br/> <%= I18n.t("tog_core.site.comment.comments")%>: <%=link_to addr.comments.size,bookmarks_address_path(addr), :class=>"maincolor5"%></span>
-	</div>	
+  <div class="subtitle">
+    <span class="maincolor2"><%= link_to addr.url, addr.url, :class =>"maincolor3"%><br />
+    <%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(addr.owner.profile.full_name, profile_path(addr.owner.profile), :class => 'maincolor5')) %>
+    <br/> <%= I18n.t("tog_core.site.comment.comments")%>: <%=link_to addr.comments.size,bookmarks_address_path(addr), :class=>"maincolor5"%></span>
+  </div>  
 <%if logged_in?%>
   <div class="maincolor5">
      <%= link_to_remote I18n.t("tog_bookmarks.site.copy_link"), :url => copy_member_bookmarks_bookmark_path(addr), :html=> {:class =>'maincolor5'}%> <%= link_to_remote image_tag("/img/ico/add.gif"), :url => copy_member_bookmarks_bookmark_path(addr), :html=> {:class =>'maincolor5'}%>
   </div>
 <%end%>
-<%if logged_in?-%><%=report_abuse_link(@address, I18n.t("tog_core.site.abuses.report_abuse"), :class => 'maincolor5') %><%end-%>				
+<%if logged_in?-%><%=report_abuse_link(@address, I18n.t("tog_core.site.abuses.report_abuse"), :class => 'maincolor5') %><%end-%>        
 </li>

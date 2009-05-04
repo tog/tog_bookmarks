@@ -3,6 +3,7 @@ require 'uri'
 class Address < ActiveRecord::Base
   acts_as_commentable
   acts_as_abusable  
+  acts_as_rateable :average => true  
 
   belongs_to :owner, :class_name =>'User', :foreign_key =>'author_id'
   has_many :bookmarks, :class_name =>'Bookmark', :foreign_key =>'address_id', :dependent => :destroy
