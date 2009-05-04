@@ -2,7 +2,7 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
   
   include ActionView::Helpers::SanitizeHelper
         
-  before_filter :check_owner, :only => [:delete]   
+  before_filter :check_owner, :only => [:destroy, :update]   
     
   def index
     @page = params[:page] || 1
@@ -28,6 +28,9 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
     end
   end
 
+  def new
+  end
+  
   def create 
     @address = Address.get_address(params[:bookmark][:url], 
                                    current_user,
@@ -53,21 +56,25 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
     end
   end    
 
+  def edit
+    @bookmark = Bookmark.find(params[:id])
+  end
+  
   def update
     @bookmark = Bookmark.find(params[:id])
     if @bookmark.authorized_write(current_user)
       @bookmark.update_attributes(params[:bookmark])
       respond_to do |format|
-        format.html { redirect_to :back }
+        format.html { redirect_to :action => 'index' }
         format.xml  { head :ok }
       end
     end
   end
   
-  def delete
+  def destroy
     @bookmark.destroy
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to :action => 'index' }
       format.xml  { head :ok }
     end
   end     

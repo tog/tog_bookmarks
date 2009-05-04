@@ -8,7 +8,7 @@ end
 
 namespace(:member) do |member| 
   member.namespace(:bookmarks) do |bookmark| 
-    bookmark.resources :bookmarks, :member => {:copy => :post, :delete=> :get}
+    bookmark.resources :bookmarks, :member => {:copy => :post}
   end
 end
 

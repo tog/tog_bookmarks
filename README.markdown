@@ -8,4 +8,4 @@ tog_bookmarks is a little delicious clone.
 * Addresses (URLs) and bookmarks
 * Bookmarks counter for each address
 * Share bookmarks between users and groups
-* Bookmark privacy: public, private, social network and group members
+* Bookmark privacy: public, private and social network 

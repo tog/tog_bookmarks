@@ -1,0 +1,37 @@
+<% form_for :bookmark, :url => member_bookmarks_bookmarks_path, :html => {:id => 'f_new', :method => "post"} do |f| -%>
+
+  <div class="titleA round clearfix">Nuevo enlace</div>
+
+    <div class="content clearfix">
+
+
+  <fieldset>
+    <div class="fields">
+      <p>
+        <label for="title">Titulo</label>
+        <%= f.text_field :title, :class => "wide fieldbox", :size => 30 %>
+      </p>
+      <p>
+        <label for="url"><acronym lang="en" xml:lang="en" title="Uniform Resource Locator (Localizador Uniforme de Recurso)">URL</acronym></label>
+        <%= f.text_field :url, :class => "wide fieldbox", :size => 30 %>
+      </p>
+      <p>
+        <label for="privacy">Privado</label>
+        <%= f.check_box :privacy%>
+      </p>
+      <p>
+        <label for="description">Descripción</label>
+        <%= f.text_area :description, :class => "wide fieldbox", :size => "40x6" %>
+      </p>        
+      <p>
+        <label for="group_tag_list">Etiquetas:</label>
+        <%= f.text_field :tag_list, :class => "wide fieldbox", :size => 30 %><br/>
+        <span class="helpinfo">Separadas por comas</span>
+      </p>
+    </div>
+  </fieldset>
+    </div> <!-- .content -->
+      <div class="actions">
+        <%= submit_tag 'Guardar', :name => 'bntsubmit', :class => 'button mainaction'%>
+      </div>
+<% end -%>
