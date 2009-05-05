@@ -11,6 +11,11 @@ class Address < ActiveRecord::Base
   before_save :normalize_url
   before_save :get_host 
   
+  def self.site_search(query, search_options={})
+    sql = "%#{query}%"
+    Address.find(:all, :conditions => ["title like ? or description like ? or url like ?", sql, sql, sql])
+  end
+    
   def normalize_url
     if self.url[0..."http".length] != "http"
       self.url = "http://" + self.url
@@ -34,6 +39,10 @@ class Address < ActiveRecord::Base
       bookmark.save  
       self.bookmarks << bookmark
       bookmark
+  end  
+  
+  def creation_date(format=:short)
+    I18n.l(created_at, :format => format)
   end  
   
   def Address.get_address(url, user, title='', description='')
