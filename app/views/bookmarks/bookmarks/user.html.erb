@@ -15,9 +15,9 @@
 <% if @bookmarks.empty? %>
   <li class="clearfix">No existe ningún enlace.</li>
 <% else %>
-	<% for bmk in @bookmarks %>
-		<%= render :partial => "bookmarks/addresses/list_detail", :locals => { :addr => bmk.url } %>
-	<%end-%>
+  <% for bmk in @bookmarks %>
+    <%= render :partial => "bookmarks/addresses/list_detail", :locals => { :addr => bmk.url } %>
+  <%end-%>
 <%end-%>
 </ul>
 </div>

@@ -8,7 +8,7 @@
 
                     <div class="info">
                         <%= link_to address.title, bookmarks_address_path(address), :class =>"maincolor3"%>
-                        <span class="members maincolor2"><%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(address.owner.profile.full_name, profile_path(address.owner.profile), :class => 'maincolor5')) %>
+                        <span class="members maincolor2"><%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(address.owner.profile.full_name, profile_path(address.owner.profile), :class => 'maincolor5')) if address.owner %>
                         </span> 
                         <span class="hits maincolor3"><%= address.bookmarks_count %> <img src="/img/ico/hits.gif" alt="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" /></span>   
                     </div>

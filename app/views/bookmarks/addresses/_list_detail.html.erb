@@ -5,7 +5,7 @@
 
   <div class="subtitle">
     <span class="maincolor2"><%= link_to addr.url, addr.url, :class =>"maincolor3"%><br />
-    <%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(addr.owner.profile.full_name, profile_path(addr.owner.profile), :class => 'maincolor5')) %>
+    <%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(addr.owner.profile.full_name, profile_path(addr.owner.profile), :class => 'maincolor5')) if addr.owner %>
     <br/> <%= I18n.t("tog_core.site.comment.comments")%>: <%=link_to addr.comments.size,bookmarks_address_path(addr), :class=>"maincolor5"%></span>
   </div>  
 <%if logged_in?%>
