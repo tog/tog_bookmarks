@@ -1,1 +1,28 @@
-<%= render :partial=>'update_form', :locals=>{:bookmark=>@bookmark}%>
+<% form_for @bookmark, :url => member_bookmarks_bookmark_path(@bookmark), :html => {:id => "f_update#{@bookmark.id.to_s}", :method => "put"} do |f| -%>
+  <div class="content clearfix">
+
+      <p>
+        <label for="title">Title</label>
+        <%= f.text_field :title, :class => "wide fieldbox", :size => 30 %>
+      </p>
+      <p>
+        <label for="privacy">Private</label>
+        <%= f.check_box :privacy%>
+      </p>
+      <p>
+        <label for="description">Description</label>
+        <%= f.text_area :description, :class => "wide fieldbox", :size => "40x6" %>
+      </p>        
+      <p>
+        <label for="group_tag_list">Tags:</label>
+        <%= f.text_field :tag_list, :class => "wide fieldbox", :size => 30 %><br/>
+        <span class="helpinfo">Separated by ,</span>
+      </p>
+
+      
+
+  </div> <!-- .content -->
+  <div class="actions">
+    <%= submit_tag 'Guardar', :name => 'bntsubmit', :class => 'button round'%>
+  </div>
+<% end -%>
