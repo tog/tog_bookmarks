@@ -10,3 +10,14 @@ tog_bookmarks is a little delicious clone.
 * Share bookmarks between users and groups
 * Bookmark privacy: public, private and social network 
 * URL snapshots by thumbalizr
+
+
+More
+-------
+
+[http://github.com/tog/tog_bookmarks](http://github.com/tog/tog_bookmarks)
+
+[http://github.com/tog/tog_bookmarks/wikis](http://github.com/tog/tog_bookmarks/wikis)
+
+
+Copyright (c) 2009 Linking Paths, released under the MIT license
