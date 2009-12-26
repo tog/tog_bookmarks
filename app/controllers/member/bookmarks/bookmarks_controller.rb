@@ -1,14 +1,11 @@
 class Member::Bookmarks::BookmarksController < Member::BaseController 
   
   include ActionView::Helpers::SanitizeHelper
-        
-  before_filter :check_owner, :only => [:destroy, :update]   
-    
+            
   def index
     @page = params[:page] || 1
-    @bookmarks = Bookmark.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
-                                   :page => @page, 
-                                   :conditions => ['state = ? and owner_id = ? and owner_type = ?', 'active', current_user.id, 'User']
+    @bookmarks = current_user.bookmarks.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
+                                                 :page => @page
                                    
   end
   
@@ -16,16 +13,9 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
     address = Address.find(params[:id])
     @bookmark = address.add_bookmark(current_user)
   
-    if @bookmark.is_new?
-      msg = I18n.t("tog_bookmarks.member.bookmark_copy")
-      @bookmark.activate!		
-    else
-      msg = I18n.t("tog_bookmarks.member.bookmark_not_copy")     
-    end   
-    render :update do |page|		
-	    page.replace_html 'msg'+params[:id] , msg
-	    page.visual_effect(:appear, 'feedback'+params[:id], :duration => 0.5)
-    end
+    flash[:ok] = @bookmark.is_new? ? flash = I18n.t("tog_bookmarks.member.bookmark_copy") : I18n.t("tog_bookmarks.member.bookmark_not_copy")
+
+    redirect_to :back
   end
 
   def new
@@ -38,32 +28,30 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
                                    params[:bookmark][:description])   
        
     @bookmark = @address.add_bookmark(current_user, 
+                                      params[:bookmark][:privacy],
                                       params[:bookmark][:title], 
                                       params[:bookmark][:description], 
-                                      params[:bookmark][:tag_list], 
-                                      params[:bookmark][:privacy])                                      
+                                      params[:bookmark][:tag_list])                                      
                                       
                                         
     respond_to do |format|
-        if @bookmark.save
-            flash[:ok] = I18n.t("tog_bookmarks.member.bookmark_created") 
-            @bookmark.activate!
-            format.html { redirect_to :action => 'index'}
-        else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @bookmark.errors, :status => :unprocessable_entity }
-        end
+      if @bookmark.save
+        flash[:ok] = I18n.t("tog_bookmarks.member.bookmark_created") 
+        format.html { redirect_to :action => 'index'}
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @bookmark.errors, :status => :unprocessable_entity }
+      end
     end
   end    
 
   def edit
-    @bookmark = Bookmark.find(params[:id])
+    @bookmark = current_user.bookmarks.find(params[:id])
   end
   
   def update
-    @bookmark = Bookmark.find(params[:id])
-    if @bookmark.authorized_write(current_user)
-      @bookmark.update_attributes(params[:bookmark])
+    bookmark = current_user.bookmarks.find(params[:id])
+    if bookmark.update_attributes(params[:bookmark])
       respond_to do |format|
         format.html { redirect_to :action => 'index' }
         format.xml  { head :ok }
@@ -72,19 +60,12 @@ class Member::Bookmarks::BookmarksController < Member::BaseController
   end
   
   def destroy
-    @bookmark.destroy
+    bookmark = current_user.bookmarks.find(params[:id])
+    bookmark.destroy
     respond_to do |format|
       format.html { redirect_to :action => 'index' }
       format.xml  { head :ok }
     end
   end     
-  
-  private 
-    def check_owner
-      @bookmark = Bookmark.find(params[:id])
-      if(!@bookmark.authorized_destroy(current_user))
-        redirect_to login_path
-      end
-    end
-  	    
+ 
 end

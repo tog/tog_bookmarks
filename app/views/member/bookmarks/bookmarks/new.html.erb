@@ -1,37 +1,17 @@
-<% form_for :bookmark, :url => member_bookmarks_bookmarks_path, :html => {:id => 'f_new', :method => "post"} do |f| -%>
+<div class="titleB"><%= I18n.t('tog_bookmarks.member.new_link') %></div>
+<br />
 
-  <div class="titleA round clearfix">Nuevo enlace</div>
+<% if @bookmark && !@bookmark.errors.empty? -%>
+<div class="error">
+  <%= error_messages_for :bookmark %>
+</div>
+<% end -%>
 
-    <div class="content clearfix">
+<% form_for :bookmark, :url => member_bookmarks_bookmarks_path, :html => {:id => 'new_bookmark_form'} do |f| -%>
 
-
-  <fieldset>
-    <div class="fields">
-      <p>
-        <label for="title">Titulo</label>
-        <%= f.text_field :title, :class => "wide fieldbox", :size => 30 %>
-      </p>
-      <p>
-        <label for="url"><acronym lang="en" xml:lang="en" title="Uniform Resource Locator (Localizador Uniforme de Recurso)">URL</acronym></label>
-        <%= f.text_field :url, :class => "wide fieldbox", :size => 30 %>
-      </p>
-      <p>
-        <label for="privacy">Privado</label>
-        <%= f.check_box :privacy%>
-      </p>
-      <p>
-        <label for="description">Descripción</label>
-        <%= f.text_area :description, :class => "wide fieldbox", :size => "40x6" %>
-      </p>        
-      <p>
-        <label for="group_tag_list">Etiquetas:</label>
-        <%= f.text_field :tag_list, :class => "wide fieldbox", :size => 30 %><br/>
-        <span class="helpinfo">Separadas por comas</span>
-      </p>
+    <%= render :partial => 'form', :locals => {:f => f}%>
+    <div class="actions">
+      <%= submit_tag I18n.t('tog_bookmarks.member.save'), :class => "button" %>
     </div>
   </fieldset>
-    </div> <!-- .content -->
-      <div class="actions">
-        <%= submit_tag 'Guardar', :name => 'bntsubmit', :class => 'button mainaction'%>
-      </div>
-<% end -%>
+<% end %>

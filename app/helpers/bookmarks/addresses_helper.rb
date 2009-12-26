@@ -23,6 +23,10 @@ module Bookmarks::AddressesHelper
   end
   
   def snapshot_image(address, size=150)
-    image_tag "http://api.thumbalizr.com/?url=#{address.url}&width=#{size}"
+    image_tag "http://api.thumbalizr.com/?url=#{address.url}&width=#{size}", :alt => address.title, :title => address.title, :width => size
+  end
+  
+  def linkable_snapshop_image(address, size=150)
+    link_to snapshot_image(address, size), address.url
   end
 end

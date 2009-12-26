@@ -1,25 +1,22 @@
+<h2><span><%=I18n.t("interface.site.bookmarks")%> for <%= @user.profile.full_name %></span></h2>
+
+<div class="portlet portletB">
+
+    <div class="portlet_content">
+        <ul>
+          <% for bmk in @bookmarks %>
+            <%= render :partial => "bookmarks/addresses/list_detail", :locals => { :addr => bmk.address } %>
+          <%end-%>
+        </ul>
+    </div>    
+</div>
+
+<%= will_paginate @bookmarks%>
+
 <% content_for :sidebar do %>
-<%= render :partial => "bookmarks/addresses/tag_cloud_bookmarks" %>
-<%= render :partial => "bookmarks/addresses/topaddresses" %>        
-<%= render :partial => "bookmarks/addresses/lastaddresses" %>
+
+  <%= render :partial => "bookmarks/addresses/lastaddresses" %>
+  <br/>
+  <%= render :partial => "bookmarks/addresses/topaddresses" %>
+
 <% end %>
-
-<br/>
-
-<div class="internal_padding">
-
-<div id="bookmarks">
-  <div id="feedback_msg" style="display:none;"><br/><div class="notice">Enlace añadido correctamente</div></div>
-</div>
-<ul class="listG">
-<% if @bookmarks.empty? %>
-  <li class="clearfix">No existe ningún enlace.</li>
-<% else %>
-  <% for bmk in @bookmarks %>
-    <%= render :partial => "bookmarks/addresses/list_detail", :locals => { :addr => bmk.url } %>
-  <%end-%>
-<%end-%>
-</ul>
-</div>
-
-<%= will_paginate @bookmarks %>

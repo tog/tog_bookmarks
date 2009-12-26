@@ -1,109 +1,30 @@
 class Bookmark < ActiveRecord::Base
   include ActionView::Helpers::SanitizeHelper
   
-  IS_PUBLIC  = 0
-  IS_FRIENDS = 1
-  IS_PRIVATE = 2     
-  IS_FAMILY = 3
-  IS_FAMILY_AND_FRIENDS = 4
-    
   acts_as_taggable
   
   attr_accessor :new_bookmark
-  record_activity_of :owner
-  belongs_to :address
-  belongs_to :url, :class_name =>'Address', :foreign_key => 'address_id', :counter_cache => true
-  belongs_to :owner, :polymorphic => true, :foreign_key =>'owner_id'
   
-  acts_as_state_machine :initial => :pending
-  state :pending, :enter => :make_activation_code
-  state :active,  :enter => :do_activate
-  state :suspended
-  state :deleted
+  belongs_to :address, :counter_cache => true
+  belongs_to :user
   
-  event :activate do
-    transitions :from => :pending, :to => :active 
-  end
+  PRIVACY_PRIVATE = 0
+  PRIVACY_NETWORK = 1
+  PRIVACY_PUBLIC  = 2
   
-  event :suspend do
-    transitions :from => [:pending, :active], :to => :suspended
-  end
+  named_scope :public,  :conditions => {:privacy => 2}
+  named_scope :network, :conditions => ['privacy <> 0']
   
-  event :delete do
-    transitions :from => [:pending, :active, :suspended], :to => :deleted
-  end
+  record_activity_of :user
 
-  event :unsuspend do
-    transitions :from => :suspended, :to => :active,  :guard => Proc.new {|u| !u.activated_at.blank? }
-    transitions :from => :suspended, :to => :pending, :guard => Proc.new {|u| !u.activation_code.blank? }
-  end
-  
-  after_create :make_activation_code
-  
-  def self.site_search(query, search_options={})
-    sql = "%#{query}%"
-    Bookmark.find(:all, :conditions => ["title like ? or description like ?", sql, sql])
-  end
-  
-  def make_activation_code
-    self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
-  end 
-  
-  def make_activation_code!
-    make_activation_code
-    self.save!
-  end
-
-  def do_activate
-    self.activation_code = nil
-  end
-  
+  #says if the bookmarks is new or it existed and has been updated
   def is_new?
     !self.new_bookmark.nil?
   end
-    
-  def authorized(user, permission=:all)
-    case permission
-    when :read
-      authorized_read(user)
-    when :write
-      authorized_write(user)
-    when :destroy
-      authorized_destroy(user)
-    when :all
-      authorized_all(user)
-    end
+  
+  def creation_date(format=:short)
+    I18n.l(self.created_at, :format => format)
   end
- 
-  def authorized_read(user)
-    case self.privacy
-    when IS_PUBLIC
-      return true
-    when IS_FRIENDS
-      return self.owner.profile.friends.include?(user)
-    when IS_PRIVATE
-      return self.owner == user          
-    end         
-  end
-
-  def authorized_write(user)
-    return self.owner == user
-  end
-
-  def authorized_destroy(user)
-    
-    if self.owner_type == 'User'
-      return self.owner == user
-    else 
-      if self.owner_type == 'Group'
-        self.owner.moderators.include?(user)
-      end
-    end
-  end
-
-  def authorized_all(user)
-    authorized_read(user) && authorized_write(user) && authorized_destroy(user)
-  end  
-    
-   
+  
 end
+

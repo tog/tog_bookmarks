@@ -7,7 +7,7 @@ class Bookmarks::AddressesController < ApplicationController
     @asc = params[:asc] || 'desc'    
     @addresses = Address.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
                                   :page => @page,
-                                  :order => @order + " " + @asc 
+                                  :order => "#{@order} #{@asc}"
     @asc = @asc == 'asc' ? 'desc' : 'asc' 
     respond_to do |format|
       format.html
@@ -19,9 +19,7 @@ class Bookmarks::AddressesController < ApplicationController
     @address = Address.find(params[:id])
     
     if logged_in?
-      @bookmark = Bookmark.find(:first,
-                                :conditions =>["address_id = ? AND owner_id = ? AND owner_type = ?",
-                                                @address.id,current_user.id,"User"])
+      @bookmark = current_user.bookmarks.find_by_address_id(@address.id)
     end 
     
     respond_to do |format|
@@ -30,8 +28,5 @@ class Bookmarks::AddressesController < ApplicationController
     end
   end
 
-  def tags
-    @tag  =  params[:tag]
-    @bookmarks = Bookmark.find_tagged_with(params[:tag])
-  end
+
 end

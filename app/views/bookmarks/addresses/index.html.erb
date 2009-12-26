@@ -1,70 +1,25 @@
-<div id="pagebody" class="clearfix towcols_right">
-    
-    
-    
-    <div id="mainzone">
-        <h2 class="maintitle2 blue clearfix">
-            <span><%=I18n.t("interface.site.bookmarks")%></span>
-        </h2>
-        <div class="maintitlebottom">
-            
-		    <%= render :partial => "bookmarks/addresses/buscador" %>
+<%= auto_discovery_link_tag(:rss, bookmarks_addresses_path(:format => :rss)) %>
 
-        </div> <!-- .maintitlebottom -->
-        
-        
-        <div class="twocols_inside2">
-            
-            <div class="leftcol_inside">
+<h2><span><%=I18n.t("interface.site.bookmarks")%></span></h2>
+<p><%= link_to I18n.t('tog_bookmarks.member.new_link'), new_member_bookmarks_bookmark_path, :class => 'button add' %></p>
 
-					<%= render :partial => "bookmarks/addresses/lastaddresses" %>
+<div class="portlet portletB">
 
-            </div> <!-- .leftcol_inside -->
-            
-            
-            <div class="rightcol_inside">
+    <div class="portlet_content">
+        <ul>
+          <% for addr in @addresses %>
+            <%= render :partial => "bookmarks/addresses/list_detail", :locals => { :addr => addr } %>
+          <%end-%>
+        </ul>
+    </div>    
+</div>
 
-		    <div class="title1 maincolor4 rss"><%=I18n.t("interface.site.bookmarks")%>
-				<%=link_to image_tag("/img/ico/rss.gif"), bookmarks_addresses_path(:format=> :rss),:class=>"rss"%>
-		    </div>
+<%= will_paginate @addresses%>
 
-			<%=I18n.t("tog_bookmarks.site.order_by")%>:
-			<%= link_to I18n.t("tog_bookmarks.address.title"), bookmarks_addresses_path({:asc => @asc,:order => 'title'}), {:class => "maincolor3", :title => "Ordenar por título"} -%> | 
-			<%= link_to I18n.t("tog_bookmarks.address.url"), bookmarks_addresses_path({:asc => @asc,:order => 'url'}), {:class => "maincolor3", :title => "Ordenar por URL"} -%> |
-			<%= link_to I18n.t("tog_bookmarks.address.created_at"), bookmarks_addresses_path({:asc => @asc,:order => 'created_at'}), {:class => "maincolor3", :title => "Ordenar por fecha de publicación"} -%> | 
-			<%= link_to I18n.t("tog_bookmarks.site.links_number"), bookmarks_addresses_path({:asc => @asc,:order => 'bookmarks_count'}), {:class => "maincolor3", :title => "Ordenar por número de links"} -%>				
+<% content_for :sidebar do %>
 
-			<br /><br />
+  <%= render :partial => "bookmarks/addresses/lastaddresses" %>
+  <br/>
+  <%= render :partial => "bookmarks/addresses/topaddresses" %>
 
-		    <br />
-				<div class="padding1">
-				<ul class="list1 right_ico">
-				<% for addr in @addresses %>
-					<%= render :partial => "bookmarks/addresses/list_detail", :locals => { :addr => addr } %>
-				<%end-%>
-				</ul>
-				</div> <!-- .padding1 -->
-				<br />
-		        <div class="pages_navigation big">
-		             <%= will_paginate @addresses%>
-		        </div>
-
-
-            </div> <!-- .rightcol_inside -->
-            
-        </div> <!-- .twocols_inside -->
-
-
-    </div> <!-- #mainzone -->   
-    
-    
-    <div class="sidebar_2">
-
-		<%= render :partial => "bookmarks/addresses/topaddresses" %>        
-	    <%= render :partial => "/profiles/lastmembers" %>
-	
-    </div> <!-- .sidebar_2 -->    
-        
-</div>  <!-- #pagebody -->
-
-  
+<% end %>

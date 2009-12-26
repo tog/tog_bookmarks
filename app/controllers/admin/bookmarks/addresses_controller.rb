@@ -1,10 +1,13 @@
 class Admin::Bookmarks::AddressesController < Admin::BaseController 
   
   def index
+    @order = params[:order] || 'bookmarks_count'
+    @page = params[:page] || '1'
+    @asc = params[:asc] || 'desc'    
     @addresses = Address.paginate :per_page => Tog::Config['plugins.tog_bookmarks.pagination_size'],
-                                  :page => params[:page], 
-                                  :order => 'title'
-    
+                                  :page => @page,
+                                  :order => @order + " " + @asc    
+    @asc = @asc == 'asc' ? 'desc' : 'asc'
     respond_to do |format|
        format.html # index.html.erb
        format.xml  { render :xml => @addresses }

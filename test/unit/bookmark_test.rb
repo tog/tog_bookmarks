@@ -4,8 +4,8 @@ class BookmarkTest < Test::Unit::TestCase
   context "A Bookmark " do
     
     setup do
-      @user1 = Factory(:user, :login => 'chavez')  
-      @user2 = Factory(:user, :login => 'evo')  
+      @user1 = Factory(:user)  
+      @user2 = Factory(:user)  
 
       @address1 = Factory(:address, :url => 'http://www.toghq.com?' + Time.now.to_i.to_s)  
     end
@@ -23,6 +23,23 @@ class BookmarkTest < Test::Unit::TestCase
       assert_equal true, bookmark.is_new?,  "Should be a new bookmark"
       bookmark = @address1.add_bookmark(@user1)
       assert_equal false, bookmark.is_new?,  "Shouldn't be a new bookmark"
+    end
+    
+    context 'privacy' do
+      setup do        
+        @address2 = Factory(:address, :url => 'http://www.google.com?' + Time.now.to_i.to_s)
+        @address3 = Factory(:address, :url => 'http://www.yahoo.com?' + Time.now.to_i.to_s)
+        @address1.add_bookmark(@user1, Bookmark::PRIVACY_PRIVATE)
+        @address2.add_bookmark(@user1, Bookmark::PRIVACY_NETWORK)
+        @address3.add_bookmark(@user1, Bookmark::PRIVACY_PUBLIC)
+      end
+      
+      should "should hide no public bookmarks" do
+        assert_equal 1, @user1.bookmarks.public.size
+        assert_equal 2, @user1.bookmarks.network.size
+        assert_equal 3, @user1.bookmarks.size
+      end
+            
     end
     
 #   context "search" do

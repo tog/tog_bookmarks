@@ -1,5 +1,5 @@
 namespace :bookmarks do |bookmark|
-  bookmark.resources :addresses, :collection => {:tags => :get}
+  bookmark.resources :addresses, :collection => {:tag => :get}
 end
 
 with_options(:controller => 'bookmarks/bookmarks') do |bookmarks|

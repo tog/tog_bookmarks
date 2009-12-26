@@ -1,0 +1,31 @@
+<fieldset>
+  <legend>Details</legend>
+  <div class="fields">
+    
+    <p>
+      <label for="title">Title</label>
+      <%= f.text_field :title, :class => "wide fieldbox", :size => 30 %>
+    </p>
+    <p>
+      <label for="url"><acronym lang="en" xml:lang="en" title="Uniform Resource Locator (Localizador Uniforme de Recurso)">URL</acronym></label>
+      <% if @bookmark %>
+        <%= link_to @bookmark.address.url, @bookmark.address.url %>
+      <% else %>
+        <%= f.text_field :url, :class => "wide fieldbox", :size => 30 %>
+      <% end %>
+    </p>
+    <p>
+      <label for="privacy">Privacy</label>
+      <%= select("bookmark", "privacy", options_for_select([["Private", "0"], ["Network", "1"], ["Public", "2"]], :selected => @bookmark ? @bookmark.privacy : nil)
+      ) %>      
+    </p>
+    <p>
+      <label for="description">Description</label>
+      <%= f.text_area :description, :class => "wide fieldbox", :size => "40x6" %>
+    </p>        
+    <p>
+      <label for="group_tag_list">Tags</label>
+      <%= f.text_field :tag_list, :class => "wide fieldbox", :size => 30 %><br/>
+      <span class="helpinfo">Separated by commas</span>
+    </p>      
+  </div>

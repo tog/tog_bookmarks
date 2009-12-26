@@ -1,66 +1,39 @@
-<% content_for :sidebar do %>
-  <%= render :partial => "bookmarks/addresses/tag_cloud_bookmarks" %>
-<% end %>
-   
-<div class="internal_padding clearfix">
-
-    <br/>
-
-  <div id="bookmarks">
-
-  <br/>
-  <p><%= link_to 'Nuevo enlace', new_member_bookmarks_bookmark_path, :class => 'button mainaction round' %></p>
-  
-  <ul class="listG">
-    
-       <div id="feedback_msg" style="display:none;"><br/><div class="notice">Enlace añadido correctamente</div></div>
-    <% if not @bookmarks.blank?%>
-       <% @bookmarks.each do |bookmark| %>
-       <li class="clearfix">
-          <div id="bookmark<%=bookmark.id%>">
-         
-            <table width="100%">
-              <td style="width:20%">
-                <%= image_tag "http://api.thumbalizr.com/?url=#{bookmark.url.url}&width=100" %>
-              </td>
-              <td style="width:80%">
-                  <div class="title"><%= link_to bookmark.title, bookmarks_address_path(bookmark.url), :class =>"maincolor3"%></div>
-                  <span title="compartido por <%= bookmark.url.bookmarks_count %> usuarios" class="hits_ico right_ico">Compartido por <%= bookmark.url.bookmarks_count %> usuarios</span>
-                  <div class="subtitle">
-                    <span class="maincolor2"><%= link_to bookmark.url.url, bookmark.url.url, :class =>"maincolor3"%>      </span>
-                  </div>
-                  <div class="text">
-                    <%= bookmark.description %>
-                    <br/>
-                    <% tags = bookmark.tag_list %>
-                    Tags:
-                    <% if !tags.blank? %>
-                      <% for tag in tags %>
-                        <%= link_to tag, tags_bookmarks_addresses_path(:tag => tag) %>
-                      <% end %>
-                    <% else %>
-                      No tags.
-                    <% end %>
-                    <br/><br/>
-                    <div id="item_buttons">
-                    <%= share_with_groups_link(bookmark.url) -%>
-                    <%= link_to 'Editar', edit_member_bookmarks_bookmark_path(bookmark), :class =>'button mainaction round'%>
-                    <%= link_to 'Eliminar',member_bookmarks_bookmark_path(bookmark), :confirm=>'¿De verdad quieres eliminar el enlace?', :method => :delete, :class =>'button mainaction round' %>
-                    </div>
-                  </div>
-              </td>  
-            </table>
-          </div>    
-       </li>
-      <%end -%>
-    <%else%>
-      <li class="clearfix"><%=I18n.t("tog_bookmarks.site.no_bookmarks")%></li>
-    <%end%>
-    </ul>
-    <%= will_paginate @bookmarks %>
-  </div>
-
-<br/>
+<h2><span><%=I18n.t("interface.site.bookmarks")%></span></h2>
+<p><%= link_to I18n.t('tog_bookmarks.member.new_link'), new_member_bookmarks_bookmark_path, :class => 'button add' %></p>
 
 
-</div>
+<table class="tableB">
+    <thead>
+
+    <tr>
+        <th scope="col">Snapshot</th>
+        <th scope="col">Title</th>
+        <th scope="col">Shared by</th>
+        <th scope="col">Creation date</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+
+    <tfoot>
+        <tr>
+            <td colspan="6" class="info_results">
+            <span class="info_items"></span>
+            <span class="pages_navigation right"><%= will_paginate @bookmarks%></span>                                    
+            </td>
+        </tr>
+    </tfoot>
+
+    <tbody>
+      <% for bookmark in @bookmarks %>
+        <tr <%= cycle("class=\"pair\"", "")%> >
+            <td><%= snapshot_image(bookmark.address, 100)%></td>
+            <td><%= bookmark.title %></td>
+            <td><%= bookmark.address.bookmarks_count %></td>
+            <td><%= bookmark.creation_date %></td>
+            <td><%= link_to 'Edit', edit_member_bookmarks_bookmark_path(bookmark), :class =>'button'%></td>
+            <td><%= link_to 'Remove',member_bookmarks_bookmark_path(bookmark), :confirm=>'Are you sure you want to delete this bookmark?', :method => :delete, :class =>'button delete' %></td>
+        </tr>
+      <%end-%>
+    </tbody>
+</table>

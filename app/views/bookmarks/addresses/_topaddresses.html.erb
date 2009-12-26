@@ -1,24 +1,17 @@
-<div class="portlet_redsocial lightblue">
-    <div class="portlet_title"><strong><%= I18n.t("tog_bookmarks.site.top_links",:number=>"5") %></strong><%=link_to image_tag("/img/ico/rss.gif"), bookmarks_addresses_path(:format=> :rss),:class=>"rss"%></div>
+<div class="portlet portletJ" id="portlet_pluginsTog">
+    <h2><span>Most shared addresses</span></h2>
     <div class="portlet_content">
-        <ul class="list3">
-                <% top_addresses.each do |address| %>
-
-                <li class="clearfix">
-
-                    <div class="info">
-                        <%= link_to address.title, bookmarks_address_path(address.id), :class =>"maincolor3"%>
-                        <span class="members maincolor2"><%= I18n.t("tog_bookmarks.site.shared_by",:user=>link_to(address.owner.profile.full_name, profile_path(address.owner.profile), :class => 'maincolor5')) if address.owner %>
-                        </span> 
-                        <span class="hits maincolor3"><%= address.bookmarks_count %> <img src="/img/ico/hits.gif" alt="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" title="<%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>" /></span>   
-                    </div>
-                </li>
-
-          <% end -%>    
-
-        </ul>
-
-        
-        <p class="viewall"><%= link_to I18n.t("tog_bookmarks.site.see_all"), bookmarks_addresses_path%></p>
-    </div> <!-- .portlet_content -->    
-</div> <!-- .portlet_redsocial -->
+        <ul>
+          <% top_addresses.each do |address| %>
+            <li class="clearfix">
+                <div class="image"><%= linkable_snapshop_image(address, 72)%></div>
+                <div class="title"><%= link_to address.title, address.url%></div>
+                <div class="text">
+                  <%= I18n.t("tog_bookmarks.site.shared_by", :user=> link_to(address.user.profile.full_name, profile_path(address.user.profile))) %>. 
+                  <%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>address.bookmarks_count) %>
+                </div>
+            </li>
+          <%end%>
+        </ul> 
+    </div>    
+</div>

@@ -5,10 +5,7 @@ class CreateBookmarks < ActiveRecord::Migration
         t.integer  :address_id
         t.string   :title
         t.string   :description
-        t.string   :state
-        t.integer  :owner_id
-        t.string   :activation_code
-        t.string   :owner_type, :default => "", :null =>false
+        t.integer  :user_id
         t.integer  :privacy, :default => 0
         t.timestamps
       end     
@@ -17,7 +14,7 @@ class CreateBookmarks < ActiveRecord::Migration
         t.string   :url
         t.string   :title, :default => ''
         t.string   :description, :default => ''        
-        t.integer  :author_id
+        t.integer  :user_id
         t.integer  :bookmarks_count, :default => 0
         t.timestamps
       end 

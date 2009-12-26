@@ -7,10 +7,10 @@
 </p>
 
 <table class="tableE">
-	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th><td><%=@address.title%></td></tr>
-	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.url") %></th><td><%=@address.url%></td></tr>	
-	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.description") %></th><td><%=@address.description%></td></tr>	
-	<tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.count") %></th><td><%=@address.bookmarks_count%></td></tr>	
-  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.author") %></th><td><%= link_to @address.owner.login, edit_admin_user_url(@address.owner) %></td></tr>
-  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.created_at") %></th><td><%=@address.created_at%></td></tr>
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.title") %></th><td><%=@address.title%></td></tr>
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.url") %></th><td><%=@address.url%></td></tr>  
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.description") %></th><td><%=@address.description%></td></tr>  
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.count") %></th><td><%=@address.bookmarks_count%></td></tr>  
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.author") %></th><td><%= link_to @address.user.login, edit_admin_user_url(@address.user) %></td></tr>
+  <tr><th scope="row"><%= I18n.t("tog_bookmarks.admin.created_at") %></th><td><%=@address.creation_date %></td></tr>
 </table>

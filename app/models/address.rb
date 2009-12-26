@@ -5,8 +5,8 @@ class Address < ActiveRecord::Base
   acts_as_abusable  
   acts_as_rateable :average => true  
 
-  belongs_to :owner, :class_name =>'User', :foreign_key =>'author_id'
-  has_many :bookmarks, :class_name =>'Bookmark', :foreign_key =>'address_id', :dependent => :destroy
+  belongs_to :user
+  has_many :bookmarks, :dependent => :destroy
 
   before_save :normalize_url
   before_save :get_host 
@@ -22,23 +22,22 @@ class Address < ActiveRecord::Base
     end
   end  
   
-  def add_bookmark(owner, title='', description='', tag_list=nil, privacy=0)
-      bookmark = Bookmark.find(:first,
-                        :conditions =>["address_id = ? AND owner_id = ? AND owner_type = ?",self.id,owner.id,owner.class.name])
-      if(bookmark.blank?)
-        bookmark = Bookmark.new
-        bookmark.new_bookmark = true
-      end
-      bookmark.url = self
-      bookmark.owner = owner
-      bookmark.privacy = privacy
-      bookmark.title = title == '' ? self.title : title
-      bookmark.description = description == '' ? self.description : description
-      bookmark.tag_list = tag_list
-      bookmark.make_activation_code
-      bookmark.save  
-      self.bookmarks << bookmark
-      bookmark
+  def add_bookmark(user, privacy=Bookmark::PRIVACY_PRIVATE, title='', description='', tag_list=nil)
+    bookmark = user.bookmarks.find_by_address_id(self.id)
+    unless bookmark
+      bookmark = Bookmark.new
+      #this bookmark didn't exist previously
+      bookmark.new_bookmark = true
+    end
+    bookmark.address = self
+    bookmark.user = user
+    bookmark.privacy = privacy
+    bookmark.title = title == '' ? self.title : title
+    bookmark.description = description == '' ? self.description : description
+    bookmark.tag_list = tag_list
+    bookmark.save  
+    self.bookmarks << bookmark
+    bookmark
   end  
   
   def creation_date(format=:short)
@@ -50,9 +49,9 @@ class Address < ActiveRecord::Base
     addr = Address.find(:first,:conditions =>["url = ?",url])
     if(addr.blank?)
       addr = Address.new(:url=> url,
-                        :owner => user,
-                        :title => title,
-                        :description => description)
+                         :user => user,
+                         :title => title,
+                         :description => description)
       addr.save
     else
       title = addr.title if title == ''
