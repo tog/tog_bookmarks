@@ -11,6 +11,14 @@ tog_bookmarks is a little delicious clone.
 * Bookmark privacy: public, private and social network 
 * URL snapshots by thumbalizr
 
+Resources
+=========
+
+Install
+-------
+
+rake rails:template LOCATION=http://tr.im/tog_bookmarks_edge
+
 
 More
 -------
