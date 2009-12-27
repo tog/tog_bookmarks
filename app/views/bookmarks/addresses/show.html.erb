@@ -8,7 +8,7 @@
   <div class="image"><%= linkable_snapshop_image(@address)%></div>
   <div class="title"><%=@address.title%></div>
   <div class="subtitle">
-    <%= @address.url %>
+    <%= link_to @address.url, @address.url %>
     <br/>
     <%= I18n.t("tog_bookmarks.site.shared_by", :user=> link_to(@address.user.profile.full_name, profile_path(@address.user.profile))) %>. 
     <%= I18n.t("tog_bookmarks.site.shared_by_number",:number=>@address.bookmarks_count) %>
